@@ -1,608 +1,374 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ÇAN-SU | Akıllı Su ve Enerji Yönetim Sistemi</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Google Fonts Inter -->
+    <title>ÇAN-SU | Akıllı Su ve Enerji Yönetimi</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        petrol: '#102B35',
-                        turquoise: '#20B8A5',
-                        greenEco: '#72B77A',
-                        fogWhite: '#F4F7F6',
-                        lightAqua: '#E9F5F2'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #F4F7F6;
+        :root[data-theme="light"] {
+            --bg-main: #F4F7F6;
+            --bg-card: #FFFFFF;
+            --bg-sidebar: #102B35;
+            --bg-accent: #E9F5F2;
+            --text-main: #102B35;
+            --text-muted: #5A717D;
+            --text-sidebar: #A0B0B9;
+            --text-sidebar-active: #FFFFFF;
+            --primary-turquoise: #20B8A5;
+            --primary-green: #72B77A;
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 2px 8px rgba(16, 43, 53, 0.05);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-main: #0B1920;
+            --bg-card: #132731;
+            --bg-sidebar: #08141A;
+            --bg-accent: #1A3844;
+            --text-main: #EAEFF2;
+            --text-muted: #8EA1AC;
+            --text-sidebar: #728896;
+            --text-sidebar-active: #20B8A5;
+            --primary-turquoise: #20B8A5;
+            --primary-green: #72B77A;
+            --border-color: #1E3845;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Inter', sans-serif;
-            color: #102B35;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
-        .card-shadow {
-            box-shadow: 0 4px 20px -2px rgba(16, 43, 53, 0.05);
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
         }
-        .nav-item-active {
-            background-color: rgba(32, 184, 165, 0.15);
-            color: #20B8A5;
-            border-right: 4px solid #20B8A5;
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1000;
         }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 8px 24px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        ::-webkit-scrollbar-track {
-            background: #F4F7F6;
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-turquoise);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
+
+        .brand-title {
+            color: #FFFFFF;
+            font-size: 18px;
+            font-weight: 700;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+
+        .brand-subtitle {
+            color: var(--text-sidebar);
+            font-size: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-sidebar);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--bg-accent);
+            color: var(--text-sidebar-active);
+        }
+
+        .nav-item.active {
+            border-left: 4px solid var(--primary-turquoise);
+        }
+
+        /* Main Content */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .header {
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-accent);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* Recommendation Banner */
+        .banner {
+            background-color: var(--bg-accent);
+            border: 1px solid var(--primary-turquoise);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .banner-title {
+            color: var(--primary-turquoise);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Grid System */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .chart-container {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Responsive Breakpoints (Telefon ve Tabletler için) */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                bottom: 0;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            .header {
+                padding: 16px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body>
 
-    <!-- SOL MENÜ / SIDEBAR -->
-    <aside class="w-72 bg-petrol text-white flex flex-col justify-between flex-shrink-0">
+    <!-- Sidebar / Sol Menü -->
+    <div class="sidebar" id="sidebar">
         <div>
-            <!-- LOGO & BAŞLIK -->
-            <div class="p-6 border-b border-gray-700/50 flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="p-2.5 bg-turquoise/20 text-turquoise rounded-xl">
-                        <i data-lucide="waves" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold tracking-tight text-white">ÇAN-SU</h1>
-                        <p class="text-[10px] uppercase tracking-wider text-turquoise font-semibold">SMART WATER & ENERGY</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SİSTEM DURUMU -->
-            <div class="px-6 py-4 border-b border-gray-700/30">
-                <div class="flex items-center justify-between bg-white/5 p-3 rounded-xl">
-                    <div class="flex items-center space-x-2">
-                        <span class="relative flex h-3 w-3">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-greenEco opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-greenEco"></span>
-                        </span>
-                        <span class="text-xs font-medium text-gray-200">Sistem Durumu</span>
-                    </div>
-                    <span class="text-[11px] bg-greenEco/20 text-greenEco font-semibold px-2 py-0.5 rounded-full">Aktif</span>
-                </div>
-            </div>
-
-            <!-- GEZİNTİ MENÜSÜ -->
-            <nav class="mt-4 px-3 space-y-1">
-                <button onclick="switchTab('overview')" id="nav-overview" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all nav-item-active">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                    <span>Genel Bakış</span>
-                </button>
-                <button onclick="switchTab('wind')" id="nav-wind" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-white/5 transition-all">
-                    <i data-lucide="wind" class="w-5 h-5"></i>
-                    <span>İklim ve Rüzgâr Analizi</span>
-                </button>
-                <button onclick="switchTab('water')" id="nav-water" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-white/5 transition-all">
-                    <i data-lucide="droplets" class="w-5 h-5"></i>
-                    <span>Su Kaynakları</span>
-                </button>
-                <button onclick="switchTab('schedule')" id="nav-schedule" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-white/5 transition-all">
-                    <i data-lucide="calendar-clock" class="w-5 h-5"></i>
-                    <span>Optimizasyon Takvimi</span>
-                </button>
-                <button onclick="switchTab('energy')" id="nav-energy" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-white/5 transition-all">
-                    <i data-lucide="trending-up" class="w-5 h-5"></i>
-                    <span>Enerji ve Tasarruf</span>
-                </button>
-                <button onclick="switchTab('model')" id="nav-model" class="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:bg-white/5 transition-all">
-                    <i data-lucide="cpu" class="w-5 h-5"></i>
-                    <span>Tahmin Modeli (ML)</span>
-                </button>
-            </nav>
-        </div>
-
-        <!-- ALT BİLGİ / KONUM -->
-        <div class="p-4 m-4 bg-white/5 rounded-xl border border-white/10">
-            <div class="flex items-center space-x-3 text-xs text-gray-300">
-                <i data-lucide="map-pin" class="w-4 h-4 text-turquoise"></i>
+            <div class="brand">
+                <div class="brand-logo">ÇS</div>
                 <div>
-                    <p class="font-semibold text-white">Çanakkale / Çan</p>
-                    <p class="text-[10px] text-gray-400">39.95° N, 26.97° E</p>
+                    <div class="brand-title">ÇAN-SU</div>
+                    <div class="brand-subtitle">AKILLI SU & ENERJİ</div>
                 </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active">📊 Genel Bakış</li>
+                <li class="nav-item">💨 İklim ve Rüzgâr</li>
+                <li class="nav-item">💧 Su Kaynakları</li>
+                <li class="nav-item">⚡ Optimizasyon</li>
+                <li class="nav-item">🤖 Tahmin (ML)</li>
+            </ul>
+        </div>
+        <div style="color: var(--text-sidebar); font-size: 12px; padding: 8px;">
+            📍 Çanakkale / Çan<br>
+            <span style="opacity: 0.7;">39.95° N, 26.97° E</span>
+        </div>
+    </div>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Header -->
+        <div class="header">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+                <h2>Genel Bakış</h2>
+            </div>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <span id="theme-icon">🌙</span> <span id="theme-text">Karanlık Mod</span>
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <!-- Karar Destek Banner -->
+            <div class="banner">
+                <div class="banner-title">🌱 Optimizasyon Önerisi</div>
+                <p><strong>14:00 – 16:00</strong> saatleri arasında yüksek rüzgâr potansiyeli tahmin ediliyor. Pompaların %100 kapasiteye çıkarılması ve şebeke elektriği tasarrufu önerilir.</p>
+            </div>
+
+            <!-- Metrik Kartları -->
+            <div class="metrics-grid">
+                <div class="card">
+                    <div class="card-label">Rüzgâr Hızı</div>
+                    <div class="card-value" style="color: var(--primary-turquoise);">8.4 m/s</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Depo Doluluğu</div>
+                    <div class="card-value">%76</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Aylık Tahmini Tasarruf</div>
+                    <div class="card-value" style="color: var(--primary-green);">₺412.000</div>
+                </div>
+            </div>
+
+            <!-- Grafik -->
+            <div class="chart-container">
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Rüzgâr Hızı & Pompa Çalışma Takvimi</h3>
+                <canvas id="mainChart" height="100"></canvas>
             </div>
         </div>
-    </aside>
-
-    <!-- ANA İÇERİK ALANI -->
-    <main class="flex-1 overflow-y-auto flex flex-col bg-fogWhite">
-        
-        <!-- ÜST ARAYÜZ BAŞLIĞI (HEADER) -->
-        <header class="bg-white border-b border-gray-200/80 px-8 py-4 flex items-center justify-between sticky top-0 z-10 card-shadow">
-            <div>
-                <h2 id="page-title" class="text-xl font-bold text-petrol">Genel Bakış</h2>
-                <p class="text-xs text-gray-500">Çanakkale · Çan · Enerji ve Su Yönetim Paneli</p>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <!-- Canlı Zaman Etiketi -->
-                <div class="text-right hidden sm:block">
-                    <div id="live-clock" class="text-sm font-semibold text-petrol">--:--:--</div>
-                    <div class="text-[11px] text-gray-400">Son Güncelleme: 13 Ekim 2026</div>
-                </div>
-                <button onclick="refreshData()" class="p-2.5 bg-lightAqua text-turquoise hover:bg-turquoise hover:text-white rounded-xl transition-all">
-                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- SAYFA İÇERİKLERİ -->
-        <div class="p-8 space-y-8 flex-1">
-
-            <!-- TAB 1: GENEL BAKIŞ -->
-            <div id="tab-overview" class="space-y-6">
-
-                <!-- 1. METRİK KARTLARI (KPI Cards) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                    
-                    <!-- Rüzgâr Hızı -->
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Rüzgâr Hızı (100m)</span>
-                            <div class="p-2.5 bg-lightAqua text-turquoise rounded-xl">
-                                <i data-lucide="wind" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-baseline space-x-2">
-                                <span class="text-3xl font-bold text-petrol">8,4</span>
-                                <span class="text-sm font-medium text-gray-500">m/s</span>
-                            </div>
-                            <p class="text-xs text-turquoise mt-1 font-medium flex items-center">
-                                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mr-1"></i> %18 Yüksek Verimlilik
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Depo Doluluğu -->
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Depo Doluluk Oranı</span>
-                            <div class="p-2.5 bg-lightAqua text-turquoise rounded-xl">
-                                <i data-lucide="droplet" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-baseline space-x-2">
-                                <span class="text-3xl font-bold text-petrol">%76</span>
-                            </div>
-                            <!-- İlerleme Çubuğu -->
-                            <div class="w-full bg-gray-100 h-2 rounded-full mt-3 overflow-hidden">
-                                <div class="bg-turquoise h-full rounded-full" style="width: 76%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Rüzgâr Enerjisi Potansiyeli -->
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Enerji Potansiyeli</span>
-                            <div class="p-2.5 bg-greenEco/15 text-greenEco rounded-xl">
-                                <i data-lucide="zap" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-2xl font-bold text-greenEco">Yüksek</span>
-                            </div>
-                            <p class="text-xs text-gray-500 mt-1 font-medium">Model Tahmini: Optimal</p>
-                        </div>
-                    </div>
-
-                    <!-- Tahmini Tasarruf -->
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 card-shadow flex flex-col justify-between">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Günlük Tasarruf</span>
-                            <div class="p-2.5 bg-greenEco/15 text-greenEco rounded-xl">
-                                <i data-lucide="piggy-bank" class="w-5 h-5"></i>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="flex items-baseline space-x-2">
-                                <span class="text-3xl font-bold text-petrol">₺14.850</span>
-                            </div>
-                            <p class="text-xs text-greenEco font-semibold mt-1">
-                                %32 Şebeke Maliyeti Düşüşü
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- 2. KARAR DESTEK / OPTİMİZASYON ÖNERİSİ BANNER'I -->
-                <div class="bg-lightAqua border border-turquoise/20 p-6 rounded-2xl card-shadow relative overflow-hidden">
-                    <div class="flex items-start space-x-4">
-                        <div class="p-3 bg-greenEco text-white rounded-xl shadow-md flex-shrink-0">
-                            <i data-lucide="sparkles" class="w-6 h-6"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center space-x-3">
-                                <h3 class="text-lg font-bold text-petrol">Optimizasyon Önerisi</h3>
-                                <span class="text-xs bg-greenEco/20 text-petrol font-semibold px-2.5 py-1 rounded-full">Otomatik Karar</span>
-                            </div>
-                            <p class="text-base font-semibold text-petrol mt-1">14.00 – 16.00 · Pompalama İçin En Uygun Zaman Aralığı</p>
-                            <p class="text-xs text-gray-600 mt-1 leading-relaxed">
-                                Tahmin edilen rüzgâr üretimi pik seviyeye erişeceğinden, şebeke elektriğinden bağımsız olarak su depolarının %100 kapasiteyle doldurulması önerilir. Bu işlem karbon ayak izini 1.2 ton düşürecektir.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. GRAFİK ALANI: RÜZGÂR HIZI VE POMPALAMA PLANLARI -->
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-base font-bold text-petrol">Saatlik Rüzgâr Hızı ve Pompalama Planı</h3>
-                            <p class="text-xs text-gray-400">Çan bölgesi saatlik rüzgâr gücü ve önerilen çalışma takvimi</p>
-                        </div>
-                        <div class="flex items-center space-x-4 text-xs font-medium">
-                            <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 bg-turquoise rounded-full"></span>
-                                <span class="text-gray-600">Rüzgâr Hızı (m/s)</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <span class="w-3 h-3 bg-greenEco rounded-full"></span>
-                                <span class="text-gray-600">Pompa Çalışma Gücü (%)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="h-72 w-full">
-                        <canvas id="overviewChart"></canvas>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- TAB 2: İKLİM VE RÜZGÂR ANALİZİ -->
-            <div id="tab-wind" class="space-y-6 hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                        <h3 class="text-base font-bold text-petrol">24 Saatlik Rüzgâr Hızı ve Yön Trendi</h3>
-                        <div class="h-80">
-                            <canvas id="windDetailChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Rüzgâr İstatistikleri -->
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-6">
-                        <h3 class="text-base font-bold text-petrol">Rüzgâr Metrikleri</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="p-4 bg-fogWhite rounded-xl flex justify-between items-center">
-                                <div>
-                                    <p class="text-xs text-gray-500">Ortalama Rüzgâr Hızı</p>
-                                    <p class="text-lg font-bold text-petrol">6,8 m/s</p>
-                                </div>
-                                <i data-lucide="gauge" class="w-6 h-6 text-turquoise"></i>
-                            </div>
-
-                            <div class="p-4 bg-fogWhite rounded-xl flex justify-between items-center">
-                                <div>
-                                    <p class="text-xs text-gray-500">Maksimum Rüzgâr Hızı</p>
-                                    <p class="text-lg font-bold text-petrol">12,4 m/s</p>
-                                </div>
-                                <i data-lucide="zap" class="w-6 h-6 text-greenEco"></i>
-                            </div>
-
-                            <div class="p-4 bg-fogWhite rounded-xl flex justify-between items-center">
-                                <div>
-                                    <p class="text-xs text-gray-500">Hakim Rüzgâr Yönü</p>
-                                    <p class="text-lg font-bold text-petrol">Kuzeydoğu (NE)</p>
-                                </div>
-                                <i data-lucide="compass" class="w-6 h-6 text-petrol"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: SU KAYNAKLARI -->
-            <div id="tab-water" class="space-y-6 hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                        <h3 class="text-base font-bold text-petrol">Depo Seviyesi ve Su Talebi</h3>
-                        <div class="h-72">
-                            <canvas id="waterChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                        <h3 class="text-base font-bold text-petrol">Su Deposu İstasyonları Statusü</h3>
-                        <div class="space-y-3">
-                            <div class="p-4 bg-lightAqua rounded-xl flex items-center justify-between border border-turquoise/20">
-                                <div class="flex items-center space-x-3">
-                                    <i data-lucide="database" class="w-5 h-5 text-turquoise"></i>
-                                    <div>
-                                        <p class="text-sm font-semibold text-petrol">Çan Ana Depo (Depo-1)</p>
-                                        <p class="text-xs text-gray-500">Kapasite: 5,000 m³</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs font-bold bg-turquoise text-white px-3 py-1 rounded-full">%82 Dolu</span>
-                            </div>
-
-                            <div class="p-4 bg-fogWhite rounded-xl flex items-center justify-between border border-gray-200">
-                                <div class="flex items-center space-x-3">
-                                    <i data-lucide="database" class="w-5 h-5 text-petrol"></i>
-                                    <div>
-                                        <p class="text-sm font-semibold text-petrol">Kocayayla Basınç Deposu</p>
-                                        <p class="text-xs text-gray-500">Kapasite: 2,500 m³</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs font-bold bg-greenEco text-white px-3 py-1 rounded-full">%68 Dolu</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: OPTİMİZASYON TAKVİMİ -->
-            <div id="tab-schedule" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-base font-bold text-petrol">Saatlik Pompa Çalışma Takvimi</h3>
-                        <span class="text-xs bg-lightAqua text-turquoise font-bold px-3 py-1.5 rounded-xl">Otomatik Güncellendi</span>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-fogWhite text-xs font-semibold text-gray-500 uppercase border-b border-gray-200">
-                                    <th class="p-3">Saat</th>
-                                    <th class="p-3">Rüzgâr Hızı (100m)</th>
-                                    <th class="p-3">Verimlilik Skoru</th>
-                                    <th class="p-3">Durum</th>
-                                    <th class="p-3">Enerji Kaynağı</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm divide-y divide-gray-100" id="scheduleTableBody">
-                                <!-- JS ile Doldurulacak -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 5: ENERJİ VE TASARRUF -->
-            <div id="tab-energy" class="space-y-6 hidden">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-2">
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Toplam Karbon Tasarrufu</p>
-                        <p class="text-3xl font-bold text-greenEco">34,2 Ton</p>
-                        <p class="text-xs text-gray-500">Bu ay engellenen CO₂ salınımı</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-2">
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Yenilenebilir Enerji Payı</p>
-                        <p class="text-3xl font-bold text-turquoise">%84</p>
-                        <p class="text-xs text-gray-500">Pompalama işlemlerinde kullanılan rüzgâr payı</p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-2">
-                        <p class="text-xs text-gray-400 font-semibold uppercase">Aylık Maliyet Tasarrufu</p>
-                        <p class="text-3xl font-bold text-petrol">₺412.000</p>
-                        <p class="text-xs text-gray-500">Şebeke elektriği tasarrufu</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 6: TAHMİN MODELİ (ML) -->
-            <div id="tab-model" class="space-y-6 hidden">
-                <div class="bg-white p-6 rounded-2xl border border-gray-100 card-shadow space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-base font-bold text-petrol">Random Forest Model Performansı</h3>
-                            <p class="text-xs text-gray-400">Gerçekleşen vs Tahmin Edilen Rüzgâr Hızları (R² = 0.91, RMSE = 1.82 m/s)</p>
-                        </div>
-                        <span class="text-xs bg-greenEco/20 text-greenEco font-bold px-3 py-1 rounded-full">Model Başarılı</span>
-                    </div>
-
-                    <div class="h-72">
-                        <canvas id="modelChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
+    </div>
 
     <script>
-        // Lucide İkonlarını Başlat
-        lucide.createIcons();
-
-        // Canlı Saat Fonksiyonu
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('live-clock').innerText = now.toLocaleTimeString('tr-TR');
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // Tab Değiştirme Mantığı
-        const tabs = ['overview', 'wind', 'water', 'schedule', 'energy', 'model'];
-        const titleMap = {
-            'overview': 'Genel Bakış',
-            'wind': 'İklim ve Rüzgâr Analizi',
-            'water': 'Su Kaynakları Yönetimi',
-            'schedule': 'Optimizasyon Takvimi',
-            'energy': 'Enerji ve Tasarruf Analizi',
-            'model': 'Makine Öğrenmesi Tahmin Modeli'
-        };
-
-        function switchTab(selectedTab) {
-            tabs.forEach(tab => {
-                const element = document.getElementById(`tab-${tab}`);
-                const navBtn = document.getElementById(`nav-${tab}`);
-                if (tab === selectedTab) {
-                    element.classList.remove('hidden');
-                    navBtn.classList.add('nav-item-active');
-                    navBtn.classList.remove('text-gray-300');
-                } else {
-                    element.classList.add('hidden');
-                    navBtn.classList.remove('nav-item-active');
-                    navBtn.classList.add('text-gray-300');
-                }
-            });
-            document.getElementById('page-title').innerText = titleMap[selectedTab];
+        // Hamburger Menü (Mobil için)
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
         }
 
-        // Tablo Doldurma
-        const hoursData = [
-            { time: '00:00', wind: '4.7 m/s', score: '8.2', status: 'KAPALI (%0)', color: 'bg-gray-100 text-gray-600', source: 'Şebeke Koruma' },
-            { time: '02:00', wind: '1.1 m/s', score: '1.2', status: 'KAPALI (%0)', color: 'bg-gray-100 text-gray-600', source: 'Şebeke Koruma' },
-            { time: '06:00', wind: '6.4 m/s', score: '18.4', status: 'KISMİ (%50)', color: 'bg-amber-100 text-amber-700', source: 'Karma Enerji' },
-            { time: '10:00', wind: '8.9 m/s', score: '38.2', status: 'AÇIK (%100)', color: 'bg-greenEco/20 text-petrol', source: '%100 Rüzgâr' },
-            { time: '14:00', wind: '12.4 m/s', score: '85.6', status: 'AÇIK (%100)', color: 'bg-greenEco/20 text-petrol', source: '%100 Rüzgâr' },
-            { time: '18:00', wind: '9.2 m/s', score: '42.1', status: 'AÇIK (%100)', color: 'bg-greenEco/20 text-petrol', source: '%100 Rüzgâr' },
-            { time: '22:00', wind: '3.5 m/s', score: '5.1', status: 'KAPALI (%0)', color: 'bg-gray-100 text-gray-600', source: 'Şebeke Koruma' }
-        ];
+        // Karanlık / Aydınlık Mod Geçişi
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            
+            document.getElementById('theme-icon').textContent = newTheme === 'light' ? '🌙' : '☀️';
+            document.getElementById('theme-text').textContent = newTheme === 'light' ? 'Karanlık Mod' : 'Aydınlık Mod';
+        }
 
-        const tbody = document.getElementById('scheduleTableBody');
-        hoursData.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.className = 'hover:bg-fogWhite transition-all';
-            tr.innerHTML = `
-                <td class="p-3 font-semibold text-petrol">${row.time}</td>
-                <td class="p-3 text-gray-600">${row.wind}</td>
-                <td class="p-3 font-bold text-turquoise">${row.score}</td>
-                <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${row.color}">${row.status}</span></td>
-                <td class="p-3 text-xs text-gray-500 font-medium">${row.source}</td>
-            `;
-            tbody.appendChild(tr);
+        // Örnek Grafik (Chart.js)
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
+                datasets: [{
+                    label: 'Rüzgâr Hızı (m/s)',
+                    data: [4.2, 5.1, 7.8, 8.4, 9.2, 8.8, 6.0, 4.5],
+                    borderColor: '#20B8A5',
+                    backgroundColor: 'rgba(32, 184, 165, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: true } }
+            }
         });
-
-        // CHART.JS GRAFİKLERİ
-        window.onload = function() {
-            // 1. Genel Bakış Grafiği
-            const ctx1 = document.getElementById('overviewChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'line',
-                data: {
-                    labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00'],
-                    datasets: [
-                        {
-                            label: 'Rüzgâr Hızı (m/s)',
-                            data: [4.7, 2.1, 6.4, 8.9, 11.2, 12.4, 9.2, 5.1],
-                            borderColor: '#20B8A5',
-                            backgroundColor: 'rgba(32, 184, 165, 0.08)',
-                            fill: true,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Pompa Çalışma Gücü (%)',
-                            data: [0, 0, 50, 100, 100, 100, 100, 0],
-                            borderColor: '#72B77A',
-                            borderDash: [5, 5],
-                            borderWidth: 2,
-                            tension: 0.1,
-                            stepped: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: '#F4F7F6' } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-
-            // 2. Rüzgâr Detay Grafiği
-            const ctx2 = document.getElementById('windDetailChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
-                    datasets: [{
-                        label: 'Rüzgâr Hızı (m/s)',
-                        data: [4.7, 1.8, 7.5, 11.2, 12.4, 6.2],
-                        backgroundColor: '#20B8A5',
-                        borderRadius: 8
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            // 3. Su Seviye Grafiği
-            const ctx3 = document.getElementById('waterChart').getContext('2d');
-            new Chart(ctx3, {
-                type: 'line',
-                data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
-                    datasets: [{
-                        label: 'Depo Doluluğu (%)',
-                        data: [50, 48, 62, 85, 92, 76],
-                        borderColor: '#102B35',
-                        borderWidth: 3,
-                        tension: 0.3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-
-            // 4. ML Model Grafiği
-            const ctx4 = document.getElementById('modelChart').getContext('2d');
-            new Chart(ctx4, {
-                type: 'line',
-                data: {
-                    labels: ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5'],
-                    datasets: [
-                        {
-                            label: 'Gerçek Rüzgâr Hızı',
-                            data: [21.5, 24.0, 23.3, 21.4, 19.2],
-                            borderColor: '#102B35',
-                            borderWidth: 2
-                        },
-                        {
-                            label: 'Tahmin Edilen Rüzgâr Hızı',
-                            data: [19.2, 21.8, 23.4, 22.6, 20.8],
-                            borderColor: '#72B77A',
-                            borderWidth: 2,
-                            borderDash: [4, 4]
-                        }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        };
-
-        function refreshData() {
-            alert('ÇAN-SU Verileri Open-Meteo ve ML tahmin modelleri ile senkronize edildi.');
-        }
     </script>
 </body>
 </html>
