@@ -2,9 +2,10 @@ import os
 import requests
 import pandas as pd
 
-# Çanakkale / Çan koordinatları
-LATITUDE = 39.95
-LONGITUDE = 26.97
+# Çanakkale Genel Koordinatları
+LATITUDE = 39.1500
+LONGITUDE = 26.4100
+LOCATION_NAME = "Çanakkale İl Geneli"
 
 def fetch_weather_data():
     """
