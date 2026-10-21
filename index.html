@@ -29,7 +29,8 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 /* Sidebar */
 .sidebar{width:220px;flex-shrink:0;background:var(--bg-sidebar);padding:18px 12px 0;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:hidden}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding:0 6px}
-.brand-logo{width:38px;height:38px;background:linear-gradient(135deg,var(--cyan),var(--blue));border-radius:50% 50% 50% 4px;display:flex;align-items:center;justify-content:center;color:#021016;font-weight:800;font-size:14px;box-shadow:0 0 16px rgba(0,242,195,.45)}
+.brand-logo{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 8px rgba(0,242,195,.4))}
+.brand-logo svg{width:100%;height:100%;display:block}
 .brand h3{font-size:17px;font-weight:800;color:#fff;letter-spacing:.5px}
 .brand p{font-size:8px;color:var(--cyan);font-weight:700;letter-spacing:.4px}
 .nav-menu{list-style:none}
@@ -273,12 +274,40 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 <aside class="sidebar">
   <div>
     <div class="brand">
-      <div class="brand-logo">ÇS</div>
+      <div class="brand-logo">
+        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="ÇAN-SU logo">
+          <defs>
+            <linearGradient id="dropGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0e6f84"/>
+              <stop offset="0.55" stop-color="#14a3a6"/>
+              <stop offset="1" stop-color="#22d3c0"/>
+            </linearGradient>
+            <clipPath id="dropClip">
+              <path d="M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z"/>
+            </clipPath>
+          </defs>
+          <!-- Damla -->
+          <path d="M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z" fill="url(#dropGrad)"/>
+          <g clip-path="url(#dropClip)" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <!-- At başı: boyun/yele -->
+            <path d="M21 41V25Q21 17 30 16"/>
+            <path d="M25 41V26Q25 21 30 20.5"/>
+            <!-- At başı: kulak, alın, burun, çene, boyun -->
+            <path d="M30 16.5L34.5 14.5L35 19.5L41 28.5L40 31.5L35.5 30.5"/>
+            <path d="M28.5 24Q27.5 27 29.5 28.5"/>
+            <path d="M35.5 30.5Q32 32 32.5 36L35 41"/>
+            <!-- Dalgalar -->
+            <path d="M11 41q5.3-3.2 10.6 0t10.6 0t10.6 0t10.6 0"/>
+            <path d="M13 46q5-3 10 0t10 0t10 0t10 0"/>
+            <path d="M17 51q4.5-2.8 9 0t9 0t9 0"/>
+          </g>
+        </svg>
+      </div>
       <div><h3>ÇAN-SU</h3><p data-tr="Akıllı Su & Enerji" data-en="Smart Water & Energy">Akıllı Su & Enerji</p></div>
     </div>
     <ul class="nav-menu">
       <li class="nav-item active" onclick="switchTab(this, 'overview')"><span>📊</span><b data-tr="Genel Bakış" data-en="Overview" style="font-weight:inherit">Genel Bakış</b></li>
-      <li class="nav-item" onclick="switchTab(this, 'climate')"><span>💨</span><b data-tr="İklim ve Rüzgâr Analizi" data-en="Climate & Wind Analysis" style="font-weight:inherit">İklim ve Rüzgâr Analizi</b></li>
+      <li class="nav-item" onclick="switchTab(this, 'climate')"><span>💨</span><b data-tr="İklim ve Rüzgar Analizi" data-en="Climate & Wind Analysis" style="font-weight:inherit">İklim ve Rüzgar Analizi</b></li>
       <li class="nav-item" onclick="switchTab(this, 'water')"><span>💧</span><b data-tr="Su Kaynakları" data-en="Water Resources" style="font-weight:inherit">Su Kaynakları</b></li>
       <li class="nav-item" onclick="switchTab(this, 'calendar')"><span>📅</span><b data-tr="Optimizasyon Takvimi" data-en="Optimization Calendar" style="font-weight:inherit">Optimizasyon Takvimi</b></li>
       <li class="nav-item" onclick="switchTab(this, 'energy')"><span>🌱</span><b data-tr="Enerji ve Tasarruf" data-en="Energy & Savings" style="font-weight:inherit">Enerji ve Tasarruf</b></li>
@@ -327,7 +356,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
         <!-- Metrics -->
         <section class="grid-4">
           <div class="metric glass searchable">
-            <div class="metric-title"><span class="mi">💨</span><span data-tr="Rüzgâr Hızı" data-en="Wind Speed">Rüzgâr Hızı</span></div>
+            <div class="metric-title"><span class="mi">💨</span><span data-tr="Rüzgâr Hızı" data-en="Wind Speed">Rüzgar Hızı</span></div>
             <div class="metric-val" style="color:var(--cyan)"><span id="val-wind-speed">8.4</span> <small>m/s</small></div>
             <div class="metric-sub">↑ %12 <span data-tr="Son 1 saat" data-en="Last 1 hour">Son 1 saat</span></div>
             <svg class="spark" viewBox="0 0 90 36"><polyline fill="none" stroke="#00f2c3" stroke-width="2" points="0,28 12,22 24,26 36,14 48,18 60,8 72,14 90,4"/></svg>
@@ -339,7 +368,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
             <svg class="drop" viewBox="0 0 44 54"><defs><linearGradient id="dg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#00a3ff"/><stop offset="1" stop-color="#00f2c3"/></linearGradient></defs><path d="M22 2C22 2 4 22 4 35a18 18 0 0 0 36 0C40 22 22 2 22 2z" fill="none" stroke="#00f2c3" stroke-width="2"/><path d="M5 34c6-4 10 4 17 0s11 4 17 0a18 18 0 0 1-35 0z" fill="url(#dg)" opacity=".85"/></svg>
           </div>
           <div class="metric glass searchable">
-            <div class="metric-title"><span class="mi">⚡</span><span data-tr="Rüzgâr Enerjisi Potansiyeli" data-en="Wind Energy Potential">Rüzgâr Enerjisi Potansiyeli</span></div>
+            <div class="metric-title"><span class="mi">⚡</span><span data-tr="Rüzgâr Enerjisi Potansiyeli" data-en="Wind Energy Potential">Rüzgar Enerjisi Potansiyeli</span></div>
             <div class="metric-val" style="color:var(--green);font-size:26px" data-tr="Yüksek" data-en="High">Yüksek</div>
             <div class="metric-sub" style="color:var(--text-muted)"><span style="margin:0" data-tr="Tahmini üretim:" data-en="Estimated output:">Tahmini üretim:</span> <strong style="color:var(--text-main)">6.8 MWh</strong></div>
             <svg class="spark" style="width:60px;height:50px;bottom:8px" viewBox="0 0 60 50"><g stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="30" y1="22" x2="30" y2="48"/><line x1="30" y1="22" x2="30" y2="4"/><line x1="30" y1="22" x2="45" y2="31"/><line x1="30" y1="22" x2="15" y2="31"/></g><circle cx="30" cy="22" r="3" fill="#22c55e"/></svg>
@@ -356,10 +385,10 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
         <section class="chart-opt">
           <div class="glass chart-card searchable">
             <div class="chart-head">
-              <h4>💨 <span data-tr="Rüzgâr Hızı ve Pompalama Planı" data-en="Wind Speed & Pumping Plan">Rüzgâr Hızı ve Pompalama Planı</span></h4>
+              <h4>💨 <span data-tr="Rüzgâr Hızı ve Pompalama Planı" data-en="Wind Speed & Pumping Plan">Rüzgar Hızı ve Pompalama Planı</span></h4>
             </div>
             <div class="legend">
-              <span><i style="background:#00a3ff"></i><span data-tr="Rüzgâr Hızı (m/s)" data-en="Wind Speed (m/s)">Rüzgâr Hızı (m/s)</span></span>
+              <span><i style="background:#00a3ff"></i><span data-tr="Rüzgâr Hızı (m/s)" data-en="Wind Speed (m/s)">Rüzgar Hızı (m/s)</span></span>
               <span><i style="background:#a855f7"></i><span data-tr="Sıcaklık (°C)" data-en="Temperature (°C)">Sıcaklık (°C)</span></span>
             </div>
             <canvas id="mainChart" height="125"></canvas>
@@ -432,7 +461,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
           <div class="w-stats">
             <span><span data-tr="Yağış" data-en="Rain">Yağış</span><strong>2.3 mm</strong></span>
-            <span><span data-tr="Rüzgâr" data-en="Wind">Rüzgâr</span><strong id="side-wind">8.4 m/s</strong></span>
+            <span><span data-tr="Rüzgar" data-en="Wind">Rüzgar</span><strong id="side-wind">8.4 m/s</strong></span>
             <span><span data-tr="Sıcaklık" data-en="Temp">Sıcaklık</span><strong id="side-humidity">%62</strong></span>
           </div>
         </div>
@@ -442,7 +471,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           <div class="map-shape"></div>
           <div class="pin-dot"><i></i><span>Çanakkale</span></div>
           <div class="map-legend">
-            <span><i style="background:#22c55e"></i><span data-tr="Rüzgâr" data-en="Wind">Rüzgâr</span></span>
+            <span><i style="background:#22c55e"></i><span data-tr="Rüzgar" data-en="Wind">Rüzgar</span></span>
             <span><i style="background:#00a3ff"></i><span data-tr="Su" data-en="Water">Su</span></span>
           </div>
         </div>
@@ -463,12 +492,12 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   <!-- TAB 2: İKLİM VE RÜZGÂR -->
   <div id="tab-climate" class="tab-pane">
     <div style="padding:24px;">
-      <h2 style="margin-bottom:16px;">💨 <span data-tr="İklim ve Rüzgâr Analizi" data-en="Climate & Wind Analysis">İklim ve Rüzgâr Analizi</span></h2>
+      <h2 style="margin-bottom:16px;">💨 <span data-tr="İklim ve Rüzgar Analizi" data-en="Climate & Wind Analysis">İklim ve Rüzgar Analizi</span></h2>
       <div class="grid-4" style="margin-bottom:20px;">
         <div class="metric glass"><div class="metric-title"><span class="mi">🌡️</span><span data-tr="Ortalama Sıcaklık" data-en="Avg Temperature">Ortalama Sıcaklık</span></div><div class="metric-val" id="climate-temp">18.5 °C</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">💧</span><span data-tr="Nem Oranı" data-en="Humidity Rate">Nem Oranı</span></div><div class="metric-val" id="climate-humidity">%62</div></div>
-        <div class="metric glass"><div class="metric-title"><span class="mi">💨</span><span data-tr="Anlık Rüzgâr Hızı" data-en="Instant Wind Speed">Anlık Rüzgâr Hızı</span></div><div class="metric-val" style="color:var(--cyan)" id="climate-wind">8.4 m/s</div></div>
-        <div class="metric glass"><div class="metric-title"><span class="mi">🧭</span><span data-tr="Rüzgâr Yönü" data-en="Wind Direction">Rüzgâr Yönü</span></div><div class="metric-val" style="font-size:20px;" id="climate-dir">Poyraz (Kuzeydoğu)</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">💨</span><span data-tr="Anlık Rüzgar Hızı" data-en="Instant Wind Speed">Anlık Rüzgâr Hızı</span></div><div class="metric-val" style="color:var(--cyan)" id="climate-wind">8.4 m/s</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">🧭</span><span data-tr="Rüzgar Yönü" data-en="Wind Direction">Rüzgar Yönü</span></div><div class="metric-val" style="font-size:20px;" id="climate-dir">Poyraz (Kuzeydoğu)</div></div>
       </div>
     </div>
   </div>
@@ -479,7 +508,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
       <h2 style="margin-bottom:16px;">💧 <span data-tr="Su Kaynakları ve Depo Takibi" data-en="Water Resources & Tanks">Su Kaynakları ve Depo Takibi</span></h2>
       <div class="grid-4" style="margin-bottom:20px;">
         <div class="metric glass"><div class="metric-title"><span class="mi">🚰</span><span data-tr="Ana Depo Hacmi" data-en="Main Reservoir Volume">Ana Depo Hacmi</span></div><div class="metric-val" style="color:var(--cyan)">9.424 m³</div></div>
-        <div class="metric glass"><div class="metric-title"><span class="mi">📊</span><span data-tr="Anlık Debu" data-en="Current Flow">Anlık Debu</span></div><div class="metric-val">420 m³/h</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">📊</span><span data-tr="Anlık Debi" data-en="Current Flow">Anlık Debi</span></div><div class="metric-val">420 m³/h</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">⚡</span><span data-tr="Aktif Pompa Sayısı" data-en="Active Pumps">Aktif Pompa Sayısı</span></div><div class="metric-val" style="color:var(--green)">3 / 4</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">🛡️</span><span data-tr="Su Basıncı" data-en="Water Pressure">Su Basıncı</span></div><div class="metric-val">4.2 Bar</div></div>
       </div>
@@ -626,7 +655,7 @@ const scheduleData = {
     { label: 'Pazar', time: '10:00 - 14:00', dots: '●○○', class: 'low' }
   ],
   daily: [
-    { label: '08:00 - 11:00', time: 'Bekleme / Düşük Rüzgâr', dots: '●○○', class: 'low' },
+    { label: '08:00 - 11:00', time: 'Bekleme / Düşük Rüzgar', dots: '●○○', class: 'low' },
     { label: '11:00 - 14:00', time: 'Orta Seviye Pompalama', dots: '●●○', class: 'mid' },
     { label: '14:00 - 18:00', time: 'Tam Kapasite Pompalama', dots: '●●●', class: '' },
     { label: '18:00 - 21:00', time: 'Kısmi Pompalama', dots: '●●○', class: 'mid' },
@@ -729,7 +758,7 @@ function buildChartWithData(labels, windData, tempData) {
     data: {
       labels: labels,
       datasets: [
-        { label: 'Rüzgâr Hızı (m/s)', data: windData, borderColor: '#00a3ff', backgroundColor: 'rgba(0,163,255,0.1)', fill: true, tension: 0.3, pointRadius: 3 },
+        { label: 'Rüzgar Hızı (m/s)', data: windData, borderColor: '#00a3ff', backgroundColor: 'rgba(0,163,255,0.1)', fill: true, tension: 0.3, pointRadius: 3 },
         { label: 'Sıcaklık (°C)', data: tempData, borderColor: '#a855f7', borderDash: [4, 4], tension: 0.3, pointRadius: 0 }
       ]
     },
@@ -787,7 +816,7 @@ function downloadPdfReport(reportType, savingsStr, capacityStr) {
       </div>
       <h2>Rapor Türü: ${reportType}</h2>
       <div class="box">
-        <strong>Özet Analiz:</strong> ${dateStr} tarihinde Çanakkale genelindeki rüzgâr potansiyeli ve su pompaları senkronizasyonu değerlendirilmiştir.
+        <strong>Özet Analiz:</strong> ${dateStr} tarihinde Çanakkale genelindeki rüzgar potansiyeli ve su pompaları senkronizasyonu değerlendirilmiştir.
       </div>
       <table>
         <thead>
@@ -799,7 +828,7 @@ function downloadPdfReport(reportType, savingsStr, capacityStr) {
         </thead>
         <tbody>
           <tr>
-            <td>Ortalama Rüzgâr Hızı</td>
+            <td>Ortalama Rüzgar Hızı</td>
             <td>${windStr}</td>
             <td>m/s</td>
           </tr>
