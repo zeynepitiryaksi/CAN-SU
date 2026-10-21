@@ -30,3 +30,13 @@ Designed to eliminate data complexity in traditional water and energy management
 
 ## 📊 Architecture & Data Status
 Weather and wind data used in the project are fetched live and in real-time via the **Open-Meteo API**. Water pump and valve controls are managed through scenario-based simulation (mock/placeholder) data for the prototype phase.
+
+---
+
+## 💻 Getting Started
+
+To run this project locally:
+
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/zeynepitiryaksi/CAN-SU.git](https://github.com/zeynepitiryaksi/CAN-SU.git)
