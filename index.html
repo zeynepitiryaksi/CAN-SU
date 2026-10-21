@@ -262,15 +262,77 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .data-table th, .data-table td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
 .data-table th{color:var(--text-muted);font-weight:700;background:rgba(0,0,0,.2)}
 
+/* Mobil menü butonu ve katman (masaüstünde gizli) */
+.menu-btn{display:none;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:18px;line-height:1;align-items:center;justify-content:center;flex-shrink:0}
+.menu-btn:hover{border-color:var(--cyan)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90;opacity:0;transition:opacity .25s}
+.content>*,.grid-bottom>*,.chart-opt>*{min-width:0}
+.glass.card{overflow-x:auto}
+
 @media(max-width:1250px){
   .content{grid-template-columns:1fr}
   .chart-opt,.grid-bottom{grid-template-columns:1fr}
   .grid-4{grid-template-columns:1fr 1fr}
-  .sidebar{display:none}
+
+  /* Sidebar: açılır çekmece */
+  .sidebar{position:fixed;left:0;top:0;bottom:0;height:100%;width:240px;z-index:100;transform:translateX(-100%);transition:transform .28s ease;overflow-y:auto}
+  body.menu-open .sidebar{transform:translateX(0);box-shadow:8px 0 32px rgba(0,0,0,.5)}
+  .sidebar-overlay{display:block;pointer-events:none}
+  body.menu-open .sidebar-overlay{opacity:1;pointer-events:auto}
+  body.menu-open{overflow:hidden}
+  .menu-btn{display:flex}
+
+  /* Başlık */
+  .header{flex-wrap:wrap;padding:10px 14px;gap:10px}
+  .hdr-left{flex:1 1 100%;flex-wrap:wrap;gap:10px;min-width:0}
+  .hdr-left .loc{flex:1;min-width:0}
+  .search-box{order:3;width:100%;flex:1 1 100%}
+  .hdr-right{flex:1 1 100%;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+}
+
+@media(max-width:700px){
+  .content{padding:12px;gap:12px}
+  .left-col,.right-col{gap:12px}
+  .tab-pane > div[style]{padding:14px !important}
+
+  .hero{padding:16px;min-height:0;flex-direction:column;gap:12px}
+  .hero h1{font-size:22px}
+  .hero p{max-width:100%}
+  .carbon{align-self:flex-start}
+
+  .grid-4{gap:10px}
+  .metric{padding:12px;min-height:108px}
+  .metric-title{font-size:10px;margin-bottom:8px}
+  .metric-val{font-size:23px}
+  .spark{width:56px;height:24px;bottom:10px;right:8px;opacity:.85}
+  .drop{width:34px;height:42px;top:36px;right:10px}
+  .bars{height:30px;right:10px}
+  .bars i{width:5px}
+
+  .chart-card{padding:12px}
+  .opt-card h2{font-size:22px}
+  .card{padding:12px}
+
+  .forecast{gap:2px}
+  .forecast .e{font-size:15px}
+  .water-wrap{flex-wrap:wrap;gap:12px}
+  .sched-row{grid-template-columns:76px 1fr auto}
+
+  .map-card{height:190px}
+  .data-table{font-size:10px;min-width:480px}
+  .form-group input,.custom-select{font-size:16px !important}
+}
+
+@media(max-width:380px){
+  .grid-4{grid-template-columns:1fr}
+  .hdr-weather small{display:none}
 }
 </style>
 </head>
 <body>
+
+<!-- Mobil menü katmanı -->
+<div class="sidebar-overlay" onclick="toggleMenu(false)"></div>
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -327,6 +389,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   <!-- Header -->
   <header class="header">
     <div class="hdr-left">
+      <button class="menu-btn" onclick="toggleMenu()" aria-label="Menü">☰</button>
       <div class="loc"><span class="pin">📍</span><div><span data-tr="Çanakkale / İl Geneli" data-en="Çanakkale / Province-wide">Çanakkale / İl Geneli</span><small>(40.15° N, 26.41° E)</small></div></div>
       <div class="search-box"><span>🔍</span><input type="text" id="searchInput" onkeyup="filterCards()" placeholder="Veri, tarih veya analiz ara..." data-ph-tr="Veri, tarih veya analiz ara..." data-ph-en="Search data, date or analysis..."></div>
     </div>
@@ -911,7 +974,14 @@ function toggleTheme(){
   document.getElementById('theme-icon').textContent = nxt==='light'?'🌙':'☀️';
 }
 
+function toggleMenu(force){
+  const open = typeof force === 'boolean' ? force : !document.body.classList.contains('menu-open');
+  document.body.classList.toggle('menu-open', open);
+}
+
 function switchTab(el, tabId){
+  toggleMenu(false);
+  window.scrollTo(0, 0);
   document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('.tab-pane').forEach(pane=>pane.classList.remove('active'));
