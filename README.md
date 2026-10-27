@@ -1,13 +1,13 @@
 # 🌊 Çanakkale Water and Energy Management SCADA & Decision Support System
 
-This project is a **SCADA and Decision Support System (DSS)** prototype developed for efficient water and energy resource management, real-time meteorological tracking, and AI-powered operational optimization in Çanakkale. Developed specifically as part of the **Siemens and Climathon program**, it targets sustainable municipal operations and green energy transition.
+This project is a **SCADA and Decision Support System (DSS)** prototype developed for efficient water and energy resource management, real-time meteorological tracking, and AI-powered operational optimization in Çanakkale. It is developed specifically for the **Climathon** program, targeting sustainable municipal operations and green energy transition.
 
 🌐 **Live Demo:** [can-su.vercel.app](https://can-su-ivj6.vercel.app)
 
 ---
 
 ## 🚀 About the Project
-Designed to eliminate data complexity in traditional water and energy management systems and provide operators with intelligent recommendations. Created under the **Siemens & Climathon** innovation framework, the system fetches external meteorological and energy pricing data in real-time to analyze curtailment risks and generate the most efficient municipal water pumping schedule.
+Designed to eliminate data complexity in traditional water and energy management systems and provide operators with intelligent recommendations. Created as part of the **Climathon** program, the system fetches external meteorological and energy pricing data in real-time to analyze curtailment risks and generate the most efficient municipal water pumping schedule.
 
 ---
 
