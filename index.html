@@ -7,6 +7,9 @@
 <!-- Sekme ikonu (favicon): damla içinde Truva Atı -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='7 1 50 56'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%230e6f84'/%3E%3Cstop offset='.55' stop-color='%2314a3a6'/%3E%3Cstop offset='1' stop-color='%2322d3c0'/%3E%3C/linearGradient%3E%3CclipPath id='c'%3E%3Cpath d='M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z' fill='url(%23g)'/%3E%3Cg clip-path='url(%23c)' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 41V25Q21 17 30 16'/%3E%3Cpath d='M25 41V26Q25 21 30 20.5'/%3E%3Cpath d='M30 16.5L34.5 14.5L35 19.5L41 28.5L40 31.5L35.5 30.5'/%3E%3Cpath d='M35.5 30.5Q32 32 32.5 36L35 41'/%3E%3Cpath d='M11 41q5.3-3.2 10.6 0t10.6 0t10.6 0t10.6 0'/%3E%3Cpath d='M13 46q5-3 10 0t10 0t10 0t10 0'/%3E%3Cpath d='M17 51q4.5-2.8 9 0t9 0t9 0'/%3E%3C/g%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Leaflet (OpenStreetMap haritası) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root[data-theme="dark"]{
@@ -86,6 +89,10 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .metric-sub{font-size:9.5px;color:var(--cyan);margin-top:8px;font-weight:700;max-width:60%}
 .metric-sub span{color:var(--text-muted);font-weight:500;margin-left:4px}
 .spark{position:absolute;right:10px;bottom:12px;width:80px;height:36px}
+/* Rüzgar hızı kartı: yazı ve mini grafik aynı satırda yan yana (üst üste binmez) */
+.metric-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:8px}
+.metric-foot .metric-sub{margin-top:0;max-width:none;flex:1 1 auto;min-width:0}
+.spark-inline{width:56px;height:22px;flex-shrink:0;display:block}
 .drop{position:absolute;right:14px;top:34px;width:44px;height:54px}
 .bars{position:absolute;right:12px;bottom:12px;display:flex;align-items:flex-end;gap:4px;height:40px}
 .bars i{display:block;width:7px;background:linear-gradient(0deg,var(--cyan),var(--blue));border-radius:2px}
@@ -153,40 +160,36 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   100% { transform: translateY(180px) scaleX(1.2); opacity: 0; }
 }
 
-/* Zenginleştirilmiş Simüle Edilmiş Harita Stilleri */
-.map-card{height:225px;position:relative;overflow:hidden;padding:12px;
-  background:radial-gradient(circle at 50% 50%,rgba(0,242,195,.08),transparent 60%),repeating-linear-gradient(0deg,rgba(0,242,195,.05) 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,rgba(0,242,195,.05) 0 1px,transparent 1px 22px),#071722}
-.map-card .lbl{font-size:10px;font-weight:700;color:var(--text-muted);position:relative;z-index:2}
-.map-shape{position:absolute;inset:34px 20px 36px;background:radial-gradient(ellipse at 40% 45%,rgba(34,197,94,.22),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(0,163,255,.22),transparent 50%)}
+/* Gerçek harita: Leaflet + OpenStreetMap */
+.map-card{height:225px;position:relative;overflow:hidden;padding:0;background:#071722}
+#scadaMap{position:absolute;inset:0;z-index:1;background:#071722;font-family:inherit}
+:root[data-theme="light"] #scadaMap{background:#dfe9ef}
+/* Harita üzerindeki öğelerin temaya göre renkleri */
+.map-card{--chip-bg:rgba(3,11,17,.78);--chip-text:#e2f1f8;--chip-muted:#9fb7c5}
+:root[data-theme="light"] .map-card{--chip-bg:rgba(255,255,255,.9);--chip-text:#0a1923;--chip-muted:#526e7e}
+.map-card .lbl{position:absolute;top:8px;left:10px;z-index:2;font-size:10px;font-weight:700;color:var(--chip-text);background:var(--chip-bg);border:1px solid var(--border);padding:3px 9px;border-radius:8px;pointer-events:none}
+.map-legend{position:absolute;bottom:8px;left:10px;display:flex;gap:10px;font-size:8px;color:var(--chip-muted);z-index:2;background:var(--chip-bg);border:1px solid var(--border);padding:3px 8px;border-radius:8px;pointer-events:none}
+/* Yakınlaştırma (+ / −) düğmeleri */
+.leaflet-bar{border:1px solid var(--border) !important;box-shadow:none !important;border-radius:10px !important;overflow:hidden}
+.leaflet-bar a{background:var(--chip-bg) !important;color:var(--cyan) !important;border-bottom:1px solid var(--border) !important;width:26px !important;height:26px !important;line-height:26px !important;font-weight:700;backdrop-filter:blur(6px)}
+.leaflet-bar a:last-child{border-bottom:none !important}
+.leaflet-bar a:hover{background:var(--cyan) !important;color:#021016 !important}
+.leaflet-bar a.leaflet-disabled{opacity:.4}
+.leaflet-top.leaflet-right{margin-top:4px}
+.map-legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px}
 
-/* Çoklu Nokta Konumlandırmaları */
-.pin-dot{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2}
-.pin-dot i{display:block;width:10px;height:10px;background:var(--cyan);border-radius:50%;box-shadow:0 0 0 5px rgba(0,242,195,.2),0 0 15px var(--cyan);margin:0 auto 4px; position:relative;}
-.pin-dot i::after, .sub-pin i::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border: 1.5px solid var(--cyan);
-  border-radius: 50%;
-  animation: radarPulse 2s infinite ease-out;
-}
-
-.sub-pin-1{position:absolute;top:30%;left:28%;text-align:center;z-index:2}
-.sub-pin-1 i{display:block;width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px rgba(34,197,94,.2),0 0 12px var(--green);margin:0 auto 3px; position:relative;}
-.sub-pin-1 i::after{border-color:var(--green);animation-delay: 0.6s;}
-
-.sub-pin-2{position:absolute;top:65%;left:72%;text-align:center;z-index:2}
-.sub-pin-2 i{display:block;width:8px;height:8px;background:var(--blue);border-radius:50%;box-shadow:0 0 0 4px rgba(0,163,255,.2),0 0 12px var(--blue);margin:0 auto 3px; position:relative;}
-.sub-pin-2 i::after{border-color:var(--blue);animation-delay: 1.2s;}
-
-.pin-dot span, .sub-pin-1 span, .sub-pin-2 span{font-size:9.5px;font-weight:700;color:#fff;background:rgba(3,11,17,0.75);padding:1px 5px;border-radius:4px;white-space:nowrap;}
-
+/* Harita noktaları (radar efektli) */
+.scada-icon{background:none;border:none}
+.scada-pin{display:block;position:relative;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 14px var(--c)}
+.scada-pin::after{content:'';position:absolute;inset:-3px;border:1.5px solid var(--c);border-radius:50%;animation:radarPulse 2s infinite ease-out}
 @keyframes radarPulse {
   0% { transform: scale(1); opacity: 1; }
   100% { transform: scale(3.2); opacity: 0; }
 }
-.map-legend{position:absolute;bottom:8px;left:12px;display:flex;gap:10px;font-size:8px;color:var(--text-muted);z-index:2}
-.map-legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px}
+.leaflet-tooltip.map-tip{background:var(--chip-bg);border:1px solid var(--border);color:var(--chip-text);font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:4px;box-shadow:none;white-space:nowrap}
+.leaflet-tooltip.map-tip::before{display:none}
+.leaflet-control-attribution{font-size:8px !important;background:var(--chip-bg) !important;color:var(--chip-muted) !important}
+.leaflet-control-attribution a{color:var(--cyan) !important}
 
 .quote{padding:18px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px; position:relative; overflow:hidden;
   background:linear-gradient(135deg,rgba(0,242,195,.08),rgba(5,14,20,.92)),url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=500&q=80') center/cover}
@@ -436,8 +439,10 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           <div class="metric glass searchable">
             <div class="metric-title"><span class="mi">💨</span><span data-tr="Rüzgâr Hızı" data-en="Wind Speed">Rüzgar Hızı</span></div>
             <div class="metric-val" style="color:var(--cyan)"><span id="val-wind-speed">8.4</span> <small>m/s</small></div>
-            <div class="metric-sub">↑ %12 <span data-tr="Son 1 saat" data-en="Last 1 hour">Son 1 saat</span></div>
-            <svg class="spark" viewBox="0 0 90 36"><polyline fill="none" stroke="#00f2c3" stroke-width="2" points="0,28 12,22 24,26 36,14 48,18 60,8 72,14 90,4"/></svg>
+            <div class="metric-foot">
+              <div class="metric-sub">↑ %12 <span data-tr="Son 1 saat" data-en="Last 1 hour">Son 1 saat</span></div>
+              <svg class="spark-inline" viewBox="0 0 90 36"><polyline fill="none" stroke="#00f2c3" stroke-width="2" points="0,28 12,22 24,26 36,14 48,18 60,8 72,14 90,4"/></svg>
+            </div>
           </div>
           <div class="metric glass searchable">
             <div class="metric-title"><span class="mi">💧</span><span data-tr="Depo Doluluğu" data-en="Tank Fill Level">Depo Doluluğu</span></div>
@@ -542,13 +547,10 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
         </div>
 
-        <!-- Zenginleştirilmiş Radar Animasyonlu Çoklu Depo/Pompa Haritası -->
-       <div class="glass map-card searchable">
+        <!-- Gerçek harita (Leaflet + OpenStreetMap) -->
+        <div class="glass map-card searchable">
+          <div id="scadaMap"></div>
           <div class="lbl">🔍 <span data-tr="Bölge Haritası ve SCADA Noktaları" data-en="Region Map & SCADA Nodes">Bölge Haritası ve SCADA Noktaları</span></div>
-          <div class="map-shape"></div>
-          <div class="pin-dot"><i></i><span data-tr="Merkez RES" data-en="Central WPP">Merkez RES</span></div>
-          <div class="sub-pin-1"><i></i><span data-tr="Ana Depo" data-en="Main Tank">Ana Depo</span></div>
-          <div class="sub-pin-2"><i></i><span data-tr="Pompa İstasyonu" data-en="Pump Station">Pompa İstasyonu</span></div>
           <div class="map-legend">
             <span><i style="background:#22c55e"></i><span data-tr="RES" data-en="WPP">RES</span></span>
             <span><i style="background:#00f2c3"></i><span data-tr="Depo" data-en="Tank">Depo</span></span>
@@ -769,6 +771,93 @@ function setScheduleView(mode, btn) {
 
 // Varsayılan Haftalık Takvimi Yükle
 setScheduleView('weekly', null);
+
+// ===== HARİTA: Leaflet + OpenStreetMap =====
+// NOT: Aşağıdaki koordinatlar ÖRNEKTİR. Gerçek tesis konumlarınla değiştir.
+const SCADA_POINTS = [
+  { lat: 40.1300, lng: 26.4500, color: '#22c55e', tr: 'Merkez RES',      en: 'Central WPP' },
+  { lat: 40.1650, lng: 26.4300, color: '#00f2c3', tr: 'Ana Depo',        en: 'Main Tank' },
+  { lat: 40.1100, lng: 26.4100, color: '#00a3ff', tr: 'Pompa İstasyonu', en: 'Pump Station' }
+];
+let scadaMap = null;
+let scadaMarkers = [];
+
+function fitScadaMap() {
+  if (!scadaMap) return;
+  const bounds = L.latLngBounds(SCADA_POINTS.map(p => [p.lat, p.lng]));
+  // Yan boşluk etiketlerin kesilmemesi, üst/alt boşluk başlık ve açıklama için
+  scadaMap.invalidateSize();
+  scadaMap.fitBounds(bounds, { padding: [60, 48], maxZoom: 13, animate: false });
+  // Hesap hatalı çıkar ya da aşırı uzaklaşırsa noktalar üst üste biner; güvenli yakınlaştırmaya zorla
+  const z = scadaMap.getZoom();
+  if (!(z >= 9)) scadaMap.setView(bounds.getCenter(), 11, { animate: false });
+}
+
+function renderMapLabels() {
+  const lang = document.documentElement.getAttribute('data-lang') || 'tr';
+  scadaMarkers.forEach(({ marker, point }) => marker.setTooltipContent(point[lang]));
+}
+
+// Harita karoları: Esri (anahtar gerektirmez), temaya göre koyu/açık gri + yer isimleri
+let scadaTiles = null;
+function setScadaTiles() {
+  if (!scadaMap) return;
+  const light = document.documentElement.getAttribute('data-theme') === 'light';
+  const url = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/' + (light ? 'World_Light_Gray' : 'World_Dark_Gray');
+  if (scadaTiles) scadaMap.removeLayer(scadaTiles);
+  scadaTiles = L.layerGroup([
+    L.tileLayer(url + '_Base/MapServer/tile/{z}/{y}/{x}', {
+      maxNativeZoom: 16, maxZoom: 16,
+      attribution: 'Tiles © Esri'
+    }),
+    L.tileLayer(url + '_Reference/MapServer/tile/{z}/{y}/{x}', {
+      maxNativeZoom: 16, maxZoom: 16
+    })
+  ]).addTo(scadaMap);
+}
+
+function initScadaMap() {
+  const el = document.getElementById('scadaMap');
+  if (!el || typeof L === 'undefined') return;
+
+  scadaMap = L.map(el, {
+    zoomControl: false,
+    scrollWheelZoom: false,
+    dragging: !L.Browser.mobile
+  });
+  scadaMap.attributionControl.setPrefix(false);
+  L.control.zoom({ position: 'topright' }).addTo(scadaMap);
+
+  setScadaTiles();
+
+  const lang = document.documentElement.getAttribute('data-lang') || 'tr';
+  SCADA_POINTS.forEach(point => {
+    const icon = L.divIcon({
+      className: 'scada-icon',
+      html: `<i class="scada-pin" style="--c:${point.color}"></i>`,
+      iconSize: [12, 12],
+      iconAnchor: [6, 6]
+    });
+    const marker = L.marker([point.lat, point.lng], { icon: icon, keyboard: false }).addTo(scadaMap);
+    marker.bindTooltip(point[lang], { permanent: true, direction: 'top', offset: [0, -8], className: 'map-tip' });
+    scadaMarkers.push({ marker, point });
+  });
+
+  scadaMap.invalidateSize();
+  fitScadaMap();
+
+  // Pencere/düzen değişince haritayı yeniden sığdır
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { scadaMap.invalidateSize(); fitScadaMap(); }, 200);
+  });
+}
+initScadaMap();
+// Sayfa (yazı tipleri, görseller) tamamen yüklenince boyutu yeniden ölç ve sığdır
+window.addEventListener('load', () => {
+  if (scadaMap) { scadaMap.invalidateSize(); fitScadaMap(); }
+});
 
 let chartInstance = null;
 
@@ -1013,6 +1102,7 @@ function toggleLanguage(){
   document.getElementById('lang-text').textContent = nxt==='tr'?'EN':'TR';
   document.querySelectorAll('[data-tr]').forEach(el=>{el.textContent=el.getAttribute('data-'+nxt);});
   document.querySelectorAll('[data-ph-tr]').forEach(el=>{el.placeholder=el.getAttribute('data-ph-'+nxt);});
+  renderMapLabels();
   updateTime();
 }
 
@@ -1021,6 +1111,7 @@ function toggleTheme(){
   const nxt = html.getAttribute('data-theme')==='light'?'dark':'light';
   html.setAttribute('data-theme',nxt);
   document.getElementById('theme-icon').textContent = nxt==='light'?'🌙':'☀️';
+  setScadaTiles();
 }
 
 function toggleMenu(force){
@@ -1036,6 +1127,10 @@ function switchTab(el, tabId){
   document.querySelectorAll('.tab-pane').forEach(pane=>pane.classList.remove('active'));
   const activePane = document.getElementById('tab-' + tabId);
   if(activePane) activePane.classList.add('active');
+  // Gizli sekmeden dönünce harita boyutunu yeniden hesapla
+  if(tabId === 'overview' && scadaMap){
+    setTimeout(()=>{ scadaMap.invalidateSize(); fitScadaMap(); }, 60);
+  }
 }
 
 fetchLiveWeatherData();
