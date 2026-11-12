@@ -414,7 +414,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
           <div class="glass carbon">
             <span data-tr="Karbon Ayak İzi" data-en="Carbon Footprint">Karbon Ayak İzi</span>
-            <strong>- %32 ↘</strong>
+            <strong id="carbon-saving-text">- %32 ↘</strong>
           </div>
         </section>
 
@@ -435,12 +435,12 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           <div class="metric glass searchable">
             <div class="metric-title"><span class="mi">⚡</span><span data-tr="Rüzgâr Enerjisi Potansiyeli" data-en="Wind Energy Potential">Rüzgar Enerjisi Potansiyeli</span></div>
             <div class="metric-val" style="color:var(--green);font-size:26px" data-tr="Yüksek" data-en="High">Yüksek</div>
-            <div class="metric-sub" style="color:var(--text-muted)"><span style="margin:0" data-tr="Tahmini üretim:" data-en="Estimated output:">Tahmini üretim:</span> <strong style="color:var(--text-main)">6.8 MWh</strong></div>
+            <div class="metric-sub" style="color:var(--text-muted)"><span style="margin:0" data-tr="Değerlendirilen:" data-en="Evaluated:">Değerlendirilen:</span> <strong id="val-energy-mwh" style="color:var(--text-main)">6.8 MWh</strong></div>
             <svg class="spark" style="width:60px;height:50px;bottom:8px" viewBox="0 0 60 50"><g stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="30" y1="22" x2="30" y2="48"/><line x1="30" y1="22" x2="30" y2="4"/><line x1="30" y1="22" x2="45" y2="31"/><line x1="30" y1="22" x2="15" y2="31"/></g><circle cx="30" cy="22" r="3" fill="#22c55e"/></svg>
           </div>
           <div class="metric glass searchable">
             <div class="metric-title"><span class="mi">💰</span><span data-tr="Tahmini Tasarruf" data-en="Estimated Savings">Tahmini Tasarruf</span></div>
-            <div class="metric-val" style="color:var(--cyan);font-size:25px">₺412.000</div>
+            <div class="metric-val" id="val-savings-tl" style="color:var(--cyan);font-size:25px">₺412.000</div>
             <div class="metric-sub" style="color:var(--text-muted)" data-tr="Bu hafta için" data-en="This week">Bu hafta için</div>
             <div class="bars"><i style="height:12px"></i><i style="height:18px"></i><i style="height:15px"></i><i style="height:26px"></i><i style="height:22px"></i><i style="height:36px"></i></div>
           </div>
@@ -470,7 +470,6 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
                 <div><b style="color:var(--blue)">%18</b><small data-tr="Daha fazla verimlilik" data-en="More efficiency">Daha fazla verimlilik</small></div>
               </div>
             </div>
-            <!-- DÜZELTME 1: Parametreler güvenli hale getirildi -->
             <button class="opt-btn" onclick="downloadPdfReport('Günlük Optimizasyon Analizi', '₺14.200', '%100')"><span data-tr="Detaylı Analiz" data-en="Detailed Analysis">Detaylı Analiz</span> →</button>
           </div>
         </section>
@@ -503,7 +502,6 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 
           <div class="glass card searchable">
             <div class="card-head"><b>📅 <span id="sched-title" data-tr="Haftalık Pompalama Takvimi" data-en="Weekly Pumping Schedule">Haftalık Pompalama Takvimi</span></b>
-              <!-- DÜZELTME 2: Butonlara tıklanınca liste güncelleniyor -->
               <div class="tabs">
                 <button data-tr="Günlük" data-en="Daily" onclick="setScheduleView('daily', this)">Günlük</button>
                 <button class="on" data-tr="Haftalık" data-en="Weekly" onclick="setScheduleView('weekly', this)">Haftalık</button>
@@ -562,7 +560,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
         <div class="metric glass"><div class="metric-title"><span class="mi">🌡️</span><span data-tr="Ortalama Sıcaklık" data-en="Avg Temperature">Ortalama Sıcaklık</span></div><div class="metric-val" id="climate-temp">18.5 °C</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">💧</span><span data-tr="Nem Oranı" data-en="Humidity Rate">Nem Oranı</span></div><div class="metric-val" id="climate-humidity">%62</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">💨</span><span data-tr="Anlık Rüzgar Hızı" data-en="Instant Wind Speed">Anlık Rüzgâr Hızı</span></div><div class="metric-val" style="color:var(--cyan)" id="climate-wind">8.4 m/s</div></div>
-        <div class="metric glass"><div class="metric-title"><span class="mi">🧭</span><span data-tr="Rüzgar Yönü" data-en="Wind Direction">Rüzgar Yönü</span></div><div class="metric-val" style="font-size:20px;" id="climate-dir">Poyraz (Kuzeydoğu)</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">🧭</span><span data-tr="Rüzgar Yönü" data-en="Wind Direction">Rüzgar Yönü</span></div><div class="metric-val" style="font-size:20px;" id="climate-dir" data-tr="Poyraz (Kuzeydoğu)" data-en="Poyraz (Northeast)">Poyraz (Kuzeydoğu)</div></div>
       </div>
     </div>
   </div>
@@ -585,11 +583,11 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">📅 <span data-tr="Optimizasyon Takvimi" data-en="Optimization Calendar">Optimizasyon Takvimi</span></h2>
       <div class="glass card" style="max-width:700px;">
-        <div class="sched-row"><span>Pazartesi</span><strong>12:00 - 16:00</strong><span class="dots">●●● (100% Kapasite)</span></div>
-        <div class="sched-row"><span>Salı</span><strong>14:00 - 18:00</strong><span class="dots">●●● (100% Kapasite)</span></div>
-        <div class="sched-row"><span>Çarşamba</span><strong>10:00 - 14:00</strong><span class="dots">●●● (100% Kapasite)</span></div>
-        <div class="sched-row"><span>Perşembe</span><strong>11:00 - 15:00</strong><span class="dots mid">●●○ (75% Kapasite)</span></div>
-        <div class="sched-row"><span>Cuma</span><strong>13:00 - 17:00</strong><span class="dots">●●● (100% Kapasite)</span></div>
+        <div class="sched-row"><span data-tr="Pazartesi" data-en="Monday">Pazartesi</span><strong>12:00 - 16:00</strong><span class="dots" data-tr="●●● (100% Kapasite)" data-en="●●● (100% Capacity)">●●● (100% Kapasite)</span></div>
+        <div class="sched-row"><span data-tr="Salı" data-en="Tuesday">Salı</span><strong>14:00 - 18:00</strong><span class="dots" data-tr="●●● (100% Kapasite)" data-en="●●● (100% Capacity)">●●● (100% Kapasite)</span></div>
+        <div class="sched-row"><span data-tr="Çarşamba" data-en="Wednesday">Çarşamba</span><strong>10:00 - 14:00</strong><span class="dots" data-tr="●●● (100% Kapasite)" data-en="●●● (100% Capacity)">●●● (100% Kapasite)</span></div>
+        <div class="sched-row"><span data-tr="Perşembe" data-en="Thursday">Perşembe</span><strong>11:00 - 15:00</strong><span class="dots mid" data-tr="●●○ (75% Kapasite)" data-en="●●○ (75% Capacity)">●●○ (75% Kapasite)</span></div>
+        <div class="sched-row"><span data-tr="Cuma" data-en="Friday">Cuma</span><strong>13:00 - 17:00</strong><span class="dots" data-tr="●●● (100% Kapasite)" data-en="●●● (100% Capacity)">●●● (100% Kapasite)</span></div>
       </div>
     </div>
   </div>
@@ -599,9 +597,9 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">🌱 <span data-tr="Enerji ve Tasarruf Paneli" data-en="Energy & Savings Panel">Enerji ve Tasarruf Paneli</span></h2>
       <div class="grid-4">
-        <div class="metric glass"><div class="metric-title"><span class="mi">💰</span><span data-tr="Aylık Toplam Tasarruf" data-en="Monthly Total Savings">Aylık Toplam Tasarruf</span></div><div class="metric-val" style="color:var(--cyan)">₺412.000</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">💰</span><span data-tr="Aylık Toplam Tasarruf" data-en="Monthly Total Savings">Aylık Toplam Tasarruf</span></div><div class="metric-val" id="energy-tab-savings" style="color:var(--cyan)">₺412.000</div></div>
         <div class="metric glass"><div class="metric-title"><span class="mi">⚡</span><span data-tr="Yeşil Enerji Kullanımı" data-en="Green Energy Usage">Yeşil Enerji Kullanımı</span></div><div class="metric-val" style="color:var(--green)">%84</div></div>
-        <div class="metric glass"><div class="metric-title"><span class="mi">🌱</span><span data-tr="Engellenen CO2" data-en="CO2 Prevented">Engellenen CO2</span></div><div class="metric-val">14.2 Ton</div></div>
+        <div class="metric glass"><div class="metric-title"><span class="mi">🌱</span><span data-tr="Engellenen CO2" data-en="CO2 Prevented">Engellenen CO2</span></div><div class="metric-val" id="energy-tab-carbon">14.2 Ton</div></div>
       </div>
     </div>
   </div>
@@ -626,33 +624,33 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
         <table class="data-table">
           <thead>
             <tr>
-              <th>Tarih</th>
-              <th>Rapor Tipi</th>
-              <th>Enerji Tasarrufu</th>
-              <th>Durum</th>
-              <th>İndir</th>
+              <th data-tr="Tarih" data-en="Date">Tarih</th>
+              <th data-tr="Rapor Tipi" data-en="Report Type">Rapor Tipi</th>
+              <th data-tr="Enerji Tasarrufu" data-en="Energy Savings">Enerji Tasarrufu</th>
+              <th data-tr="Durum" data-en="Status">Durum</th>
+              <th data-tr="İndir" data-en="Download">İndir</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>20 Ekim 2026</td>
-              <td>Günlük Optimizasyon Özeti</td>
+              <td data-tr="Günlük Optimizasyon Özeti" data-en="Daily Optimization Summary">Günlük Optimizasyon Özeti</td>
               <td>₺14.200</td>
-              <td><span style="color:var(--green)">Tamamlandı</span></td>
+              <td><span style="color:var(--green)" data-tr="Tamamlandı" data-en="Completed">Tamamlandı</span></td>
               <td><button class="btn-control" onclick="downloadPdfReport('Günlük Optimizasyon Özeti', '₺14.200', '%100')">PDF</button></td>
             </tr>
             <tr>
               <td>19 Ekim 2026</td>
-              <td>Günlük Optimizasyon Özeti</td>
+              <td data-tr="Günlük Optimizasyon Özeti" data-en="Daily Optimization Summary">Günlük Optimizasyon Özeti</td>
               <td>₺13.800</td>
-              <td><span style="color:var(--green)">Tamamlandı</span></td>
+              <td><span style="color:var(--green)" data-tr="Tamamlandı" data-en="Completed">Tamamlandı</span></td>
               <td><button class="btn-control" onclick="downloadPdfReport('Günlük Optimizasyon Özeti', '₺13.800', '%95')">PDF</button></td>
             </tr>
             <tr>
               <td>15 Ekim 2026</td>
-              <td>Haftalık Performans Raporu</td>
+              <td data-tr="Haftalık Performans Raporu" data-en="Weekly Performance Report">Haftalık Performans Raporu</td>
               <td>₺98.500</td>
-              <td><span style="color:var(--green)">Arşivlendi</span></td>
+              <td><span style="color:var(--green)" data-tr="Arşivlendi" data-en="Archived">Arşivlendi</span></td>
               <td><button class="btn-control" onclick="downloadCsvReport('15 Ekim 2026', 'Haftalık Performans Raporu', '98500')">CSV</button></td>
             </tr>
           </tbody>
@@ -667,25 +665,25 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
       <h2 style="margin-bottom:16px;">⚙️ <span data-tr="Sistem ve IoT Bağlantı Ayarları" data-en="System & IoT Connection Settings">Sistem ve IoT Bağlantı Ayarları</span></h2>
       <div class="glass card" style="max-width:600px;">
         <div class="form-group">
-          <label>SCADA / IoT Sensör Veri Yenileme Sıklığı</label>
+          <label data-tr="SCADA / IoT Sensör Veri Yenileme Sıklığı" data-en="SCADA / IoT Sensor Data Refresh Rate">SCADA / IoT Sensör Veri Yenileme Sıklığı</label>
           <select class="custom-select">
-            <option value="10">10 Saniyede Bir (Realtime)</option>
-            <option value="30" selected>30 Saniyede Bir (Önerilen)</option>
-            <option value="60">1 Dakikada Bir</option>
+            <option value="10" data-tr="10 Saniyede Bir (Realtime)" data-en="Every 10 Seconds (Realtime)">10 Saniyede Bir (Realtime)</option>
+            <option value="30" selected data-tr="30 Saniyede Bir (Önerilen)" data-en="Every 30 Seconds (Recommended)">30 Saniyede Bir (Önerilen)</option>
+            <option value="60" data-tr="1 Dakikada Bir" data-en="Every 1 Minute">1 Dakikada Bir</option>
           </select>
         </div>
         <div class="form-group">
-          <label>MQTT Broker Sunucu Adresi</label>
+          <label data-tr="MQTT Broker Sunucu Adresi" data-en="MQTT Broker Server Address">MQTT Broker Sunucu Adresi</label>
           <input type="text" value="mqtt://scada.canakkale.bel.tr:1883">
         </div>
         <div class="form-group">
-          <label>E-Posta / SMS Alarm Bildirimleri</label>
+          <label data-tr="E-Posta / SMS Alarm Bildirimleri" data-en="E-Mail / SMS Alarm Notifications">E-Posta / SMS Alarm Bildirimleri</label>
           <select class="custom-select">
-            <option value="active" selected>Kritik Seviyelerde Gönder (Aktif)</option>
-            <option value="passive">Pasif</option>
+            <option value="active" selected data-tr="Kritik Seviyelerde Gönder (Aktif)" data-en="Send at Critical Levels (Active)">Kritik Seviyelerde Gönder (Aktif)</option>
+            <option value="passive" data-tr="Pasif" data-en="Passive">Pasif</option>
           </select>
         </div>
-        <button class="btn-control on" style="margin-top:10px; padding:8px 18px;">Ayarları Kaydet</button>
+        <button class="btn-control on" style="margin-top:10px; padding:8px 18px;" data-tr="Ayarları Kaydet" data-en="Save Settings">Ayarları Kaydet</button>
       </div>
     </div>
   </div>
@@ -698,7 +696,8 @@ function updateTime() {
   const now = new Date();
   const timeStr = now.toLocaleTimeString('tr-TR');
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  const dateStr = now.toLocaleDateString('tr-TR', dateOptions);
+  const lang = document.documentElement.getAttribute('data-lang') || 'tr';
+  const dateStr = now.toLocaleDateString(lang === 'tr' ? 'tr-TR' : 'en-US', dateOptions);
   
   const timeEl = document.getElementById('live-time');
   const dateEl = document.getElementById('live-date');
@@ -756,7 +755,7 @@ setScheduleView('weekly', null);
 
 let chartInstance = null;
 
-// Backend'den Canlı Veri Çekme
+// Backend'den Canlı Veri ve Sayısal Etki Metriklerini Çekme
 async function fetchLiveWeatherData() {
   try {
     const response = await fetch('/api/run-pipeline');
@@ -768,6 +767,7 @@ async function fetchLiveWeatherData() {
       const curHum = data.canli_nem ? Math.round(data.canli_nem) : 62;
       const curDir = data.canli_yon || 0;
 
+      // DOM Temel Değerleri Güncelle
       const elWind = document.getElementById('val-wind-speed');
       const elHdrTemp = document.getElementById('hdr-temp');
       const elHdrDesc = document.getElementById('hdr-weather-desc');
@@ -781,6 +781,27 @@ async function fetchLiveWeatherData() {
       if(elSideTemp) elSideTemp.textContent = curTemp + '°C';
       if(elSideWind) elSideWind.textContent = curWind + ' m/s';
       if(elSideHum) elSideHum.textContent = '%' + curHum;
+
+      if (data.tahmini_tasarruf_tl) {
+        const savingsEl = document.getElementById('val-savings-tl');
+        if(savingsEl) savingsEl.textContent = '₺' + data.tahmini_tasarruf_tl.toLocaleString('tr-TR');
+
+        const energyTabSavings = document.getElementById('energy-tab-savings');
+        if(energyTabSavings) energyTabSavings.textContent = '₺' + data.tahmini_tasarruf_tl.toLocaleString('tr-TR');
+      }
+
+      if (data.toplam_degerlendirilen_enerji_mwh) {
+        const energyMwhEl = document.getElementById('val-energy-mwh');
+        if(energyMwhEl) energyMwhEl.textContent = data.toplam_degerlendirilen_enerji_mwh + ' MWh';
+      }
+
+      if (data.onlenen_karbon_ton) {
+        const carbonEl = document.getElementById('carbon-saving-text');
+        if(carbonEl) carbonEl.textContent = `- %${Math.round(data.onlenen_karbon_ton)} ↘`;
+
+        const energyTabCarbon = document.getElementById('energy-tab-carbon');
+        if(energyTabCarbon) energyTabCarbon.textContent = data.onlenen_karbon_ton + ' Ton';
+      }
 
       const elClimTemp = document.getElementById('climate-temp');
       const elClimHum = document.getElementById('climate-humidity');
@@ -845,7 +866,7 @@ function buildDefaultChart() {
   buildChartWithData(defaultLabels, defaultWind, defaultTemp);
 }
 
-// PDF Raporu Oluşturup İndirme Fonksiyonu (Düzeltildi)
+// PDF Raporu Oluşturup İndirme Fonksiyonu
 function downloadPdfReport(reportType, savingsStr, capacityStr) {
   const now = new Date();
   const dateStr = now.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -965,6 +986,7 @@ function toggleLanguage(){
   document.getElementById('lang-text').textContent = nxt==='tr'?'EN':'TR';
   document.querySelectorAll('[data-tr]').forEach(el=>{el.textContent=el.getAttribute('data-'+nxt);});
   document.querySelectorAll('[data-ph-tr]').forEach(el=>{el.placeholder=el.getAttribute('data-ph-'+nxt);});
+  updateTime();
 }
 
 function toggleTheme(){
