@@ -83,9 +83,9 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .mi{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:1px solid var(--cyan);color:var(--cyan);background:rgba(0,242,195,.08)}
 .metric-val{font-size:28px;font-weight:800;line-height:1}
 .metric-val small{font-size:13px;font-weight:600;color:var(--text-muted)}
-.metric-sub{font-size:9.5px;color:var(--cyan);margin-top:8px;font-weight:700}
+.metric-sub{font-size:9.5px;color:var(--cyan);margin-top:8px;font-weight:700;max-width:60%}
 .metric-sub span{color:var(--text-muted);font-weight:500;margin-left:4px}
-.spark{position:absolute;right:10px;bottom:12px;width:90px;height:36px}
+.spark{position:absolute;right:10px;bottom:12px;width:80px;height:36px}
 .drop{position:absolute;right:14px;top:34px;width:44px;height:54px}
 .bars{position:absolute;right:12px;bottom:12px;display:flex;align-items:flex-end;gap:4px;height:40px}
 .bars i{display:block;width:7px;background:linear-gradient(0deg,var(--cyan),var(--blue));border-radius:2px}
@@ -153,27 +153,40 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   100% { transform: translateY(180px) scaleX(1.2); opacity: 0; }
 }
 
-.map-card{height:215px;position:relative;overflow:hidden;padding:12px;
+/* Zenginleştirilmiş Simüle Edilmiş Harita Stilleri */
+.map-card{height:225px;position:relative;overflow:hidden;padding:12px;
   background:radial-gradient(circle at 50% 50%,rgba(0,242,195,.08),transparent 60%),repeating-linear-gradient(0deg,rgba(0,242,195,.05) 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,rgba(0,242,195,.05) 0 1px,transparent 1px 22px),#071722}
 .map-card .lbl{font-size:10px;font-weight:700;color:var(--text-muted);position:relative;z-index:2}
 .map-shape{position:absolute;inset:34px 20px 36px;background:radial-gradient(ellipse at 40% 45%,rgba(34,197,94,.22),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(0,163,255,.22),transparent 50%)}
+
+/* Çoklu Nokta Konumlandırmaları */
 .pin-dot{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2}
-.pin-dot i{display:block;width:12px;height:12px;background:var(--cyan);border-radius:50%;box-shadow:0 0 0 6px rgba(0,242,195,.2),0 0 18px var(--cyan);margin:0 auto 5px; position:relative;}
-.pin-dot i::after {
+.pin-dot i{display:block;width:10px;height:10px;background:var(--cyan);border-radius:50%;box-shadow:0 0 0 5px rgba(0,242,195,.2),0 0 15px var(--cyan);margin:0 auto 4px; position:relative;}
+.pin-dot i::after, .sub-pin i::after {
   content: '';
   position: absolute;
-  inset: -4px;
-  border: 2px solid var(--cyan);
+  inset: -3px;
+  border: 1.5px solid var(--cyan);
   border-radius: 50%;
   animation: radarPulse 2s infinite ease-out;
 }
+
+.sub-pin-1{position:absolute;top:30%;left:28%;text-align:center;z-index:2}
+.sub-pin-1 i{display:block;width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 0 4px rgba(34,197,94,.2),0 0 12px var(--green);margin:0 auto 3px; position:relative;}
+.sub-pin-1 i::after{border-color:var(--green);animation-delay: 0.6s;}
+
+.sub-pin-2{position:absolute;top:65%;left:72%;text-align:center;z-index:2}
+.sub-pin-2 i{display:block;width:8px;height:8px;background:var(--blue);border-radius:50%;box-shadow:0 0 0 4px rgba(0,163,255,.2),0 0 12px var(--blue);margin:0 auto 3px; position:relative;}
+.sub-pin-2 i::after{border-color:var(--blue);animation-delay: 1.2s;}
+
+.pin-dot span, .sub-pin-1 span, .sub-pin-2 span{font-size:9.5px;font-weight:700;color:#fff;background:rgba(3,11,17,0.75);padding:1px 5px;border-radius:4px;white-space:nowrap;}
+
 @keyframes radarPulse {
   0% { transform: scale(1); opacity: 1; }
   100% { transform: scale(3.2); opacity: 0; }
 }
-.pin-dot span{font-size:11px;font-weight:800;color:#fff}
-.map-legend{position:absolute;bottom:8px;left:12px;display:flex;gap:12px;font-size:8.5px;color:var(--text-muted);z-index:2}
-.map-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+.map-legend{position:absolute;bottom:8px;left:12px;display:flex;gap:10px;font-size:8px;color:var(--text-muted);z-index:2}
+.map-legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px}
 
 .quote{padding:18px;text-align:center;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px; position:relative; overflow:hidden;
   background:linear-gradient(135deg,rgba(0,242,195,.08),rgba(5,14,20,.92)),url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=500&q=80') center/cover}
@@ -409,7 +422,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
         <!-- Hero -->
         <section class="hero searchable">
           <div>
-            <h1><span data-tr="Merhaba," data-en="Hello," style="color:#fff">Merhaba,</span></h1>
+            <h1><span data-tr="ÇAN-SU Kontrol Merkezi" data-en="ÇAN-SU Control Center" style="color:#fff">ÇAN-SU Kontrol Merkezi</span></h1>
             <p data-tr="Çanakkale'nin doğal kaynaklarıyla daha temiz bir gelecek mümkün." data-en="A cleaner future is possible with Çanakkale's natural resources.">Çanakkale'nin doğal kaynaklarıyla daha temiz bir gelecek mümkün.</p>
           </div>
           <div class="glass carbon">
@@ -525,17 +538,21 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           <div class="w-stats">
             <span><span data-tr="Yağış" data-en="Rain">Yağış</span><strong>2.3 mm</strong></span>
             <span><span data-tr="Rüzgar" data-en="Wind">Rüzgar</span><strong id="side-wind">8.4 m/s</strong></span>
-            <span><span data-tr="Sıcaklık" data-en="Temp">Sıcaklık</span><strong id="side-humidity">%62</strong></span>
+            <span><span data-tr="Nem" data-en="Humidity">Nem</span><strong id="side-humidity">%62</strong></span>
           </div>
         </div>
 
-        <div class="glass map-card searchable">
-          <div class="lbl">🔍 <span data-tr="Bölge Haritası" data-en="Region Map">Bölge Haritası</span></div>
+        <!-- Zenginleştirilmiş Radar Animasyonlu Çoklu Depo/Pompa Haritası -->
+       <div class="glass map-card searchable">
+          <div class="lbl">🔍 <span data-tr="Bölge Haritası ve SCADA Noktaları" data-en="Region Map & SCADA Nodes">Bölge Haritası ve SCADA Noktaları</span></div>
           <div class="map-shape"></div>
-          <div class="pin-dot"><i></i><span>Çanakkale</span></div>
+          <div class="pin-dot"><i></i><span data-tr="Merkez RES" data-en="Central WPP">Merkez RES</span></div>
+          <div class="sub-pin-1"><i></i><span data-tr="Ana Depo" data-en="Main Tank">Ana Depo</span></div>
+          <div class="sub-pin-2"><i></i><span data-tr="Pompa İstasyonu" data-en="Pump Station">Pompa İstasyonu</span></div>
           <div class="map-legend">
-            <span><i style="background:#22c55e"></i><span data-tr="Rüzgar" data-en="Wind">Rüzgar</span></span>
-            <span><i style="background:#00a3ff"></i><span data-tr="Su" data-en="Water">Su</span></span>
+            <span><i style="background:#22c55e"></i><span data-tr="RES" data-en="WPP">RES</span></span>
+            <span><i style="background:#00f2c3"></i><span data-tr="Depo" data-en="Tank">Depo</span></span>
+            <span><i style="background:#00a3ff"></i><span data-tr="Pompa" data-en="Pump">Pompa</span></span>
           </div>
         </div>
 
@@ -833,6 +850,7 @@ async function fetchLiveWeatherData() {
   }
 }
 
+// Çift Eksenli (Dual Y-Axis) Gelişmiş Grafik Yapısı
 function buildChartWithData(labels, windData, tempData) {
   const canvas = document.getElementById('mainChart');
   if(!canvas) return;
@@ -844,8 +862,8 @@ function buildChartWithData(labels, windData, tempData) {
     data: {
       labels: labels,
       datasets: [
-        { label: 'Rüzgar Hızı (m/s)', data: windData, borderColor: '#00a3ff', backgroundColor: 'rgba(0,163,255,0.1)', fill: true, tension: 0.3, pointRadius: 3 },
-        { label: 'Sıcaklık (°C)', data: tempData, borderColor: '#a855f7', borderDash: [4, 4], tension: 0.3, pointRadius: 0 }
+        { label: 'Rüzgar Hızı (m/s)', data: windData, borderColor: '#00a3ff', backgroundColor: 'rgba(0,163,255,0.1)', fill: true, tension: 0.3, pointRadius: 3, yAxisID: 'y' },
+        { label: 'Sıcaklık (°C)', data: tempData, borderColor: '#a855f7', borderDash: [4, 4], tension: 0.3, pointRadius: 0, yAxisID: 'y1' }
       ]
     },
     options: {
@@ -853,7 +871,16 @@ function buildChartWithData(labels, windData, tempData) {
       plugins: { legend: { display: false } },
       scales: {
         x: { ticks: { color: muted, font: { size: 9 } }, grid: { color: 'rgba(255,255,255,.04)' } },
-        y: { ticks: { color: muted, font: { size: 9 } }, grid: { color: 'rgba(255,255,255,.05)' } }
+        y: { 
+          type: 'linear', display: true, position: 'left',
+          ticks: { color: '#00a3ff', font: { size: 9 } }, 
+          grid: { color: 'rgba(255,255,255,.05)' } 
+        },
+        y1: { 
+          type: 'linear', display: true, position: 'right',
+          ticks: { color: '#a855f7', font: { size: 9 } }, 
+          grid: { drawOnChartArea: false } 
+        }
       }
     }
   });
