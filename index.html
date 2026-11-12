@@ -164,6 +164,9 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .map-card{height:225px;position:relative;overflow:hidden;padding:0;background:#071722}
 #scadaMap{position:absolute;inset:0;z-index:1;background:#071722;font-family:inherit}
 :root[data-theme="light"] #scadaMap{background:#dfe9ef}
+/* Gri harita karolarını panelin turkuaz-lacivert temasına boya (ince ayar: hue-rotate = ton, saturate = canlılık, brightness = parlaklık) */
+:root[data-theme="dark"] .leaflet-tile-pane{filter:sepia(1) hue-rotate(158deg) saturate(2.8) brightness(1.2) contrast(1.05)}
+:root[data-theme="light"] .leaflet-tile-pane{filter:sepia(.55) hue-rotate(155deg) saturate(1.7)}
 /* Harita üzerindeki öğelerin temaya göre renkleri */
 .map-card{--chip-bg:rgba(3,11,17,.78);--chip-text:#e2f1f8;--chip-muted:#9fb7c5}
 :root[data-theme="light"] .map-card{--chip-bg:rgba(255,255,255,.9);--chip-text:#0a1923;--chip-muted:#526e7e}
@@ -773,11 +776,14 @@ function setScheduleView(mode, btn) {
 setScheduleView('weekly', null);
 
 // ===== HARİTA: Leaflet + OpenStreetMap =====
-// NOT: Aşağıdaki koordinatlar ÖRNEKTİR. Gerçek tesis konumlarınla değiştir.
+// NOT: Konumlar Çanakkale'deki gerçek yerlere denk getirildi, ama etiketler DEMO amaçlıdır.
+//  - RES   : Gülpir RES (Çanakkale Merkez) — 39.9788, 26.4472 (Global Energy Monitor)
+//  - Depo  : Atikhisar Barajı               — 40.1239, 26.5234 (Vikipedi)
+//  - Pompa : Çanakkale kent merkezi (yaklaşık, gerçek bir pompa istasyonu değil)
 const SCADA_POINTS = [
-  { lat: 40.1300, lng: 26.4500, color: '#22c55e', tr: 'Merkez RES',      en: 'Central WPP' },
-  { lat: 40.1650, lng: 26.4300, color: '#00f2c3', tr: 'Ana Depo',        en: 'Main Tank' },
-  { lat: 40.1100, lng: 26.4100, color: '#00a3ff', tr: 'Pompa İstasyonu', en: 'Pump Station' }
+  { lat: 39.9788, lng: 26.4472, color: '#22c55e', tr: 'Merkez RES',      en: 'Central WPP' },
+  { lat: 40.1239, lng: 26.5234, color: '#00f2c3', tr: 'Ana Depo',        en: 'Main Tank' },
+  { lat: 40.1500, lng: 26.4100, color: '#00a3ff', tr: 'Pompa İstasyonu', en: 'Pump Station' }
 ];
 let scadaMap = null;
 let scadaMarkers = [];
@@ -790,7 +796,7 @@ function fitScadaMap() {
   scadaMap.fitBounds(bounds, { padding: [60, 48], maxZoom: 13, animate: false });
   // Hesap hatalı çıkar ya da aşırı uzaklaşırsa noktalar üst üste biner; güvenli yakınlaştırmaya zorla
   const z = scadaMap.getZoom();
-  if (!(z >= 9)) scadaMap.setView(bounds.getCenter(), 11, { animate: false });
+  if (!(z >= 7)) scadaMap.setView(bounds.getCenter(), 10, { animate: false });
 }
 
 function renderMapLabels() {
