@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ÇAN-SU | Akıllı Su ve Enerji Yönetimi</title>
-<!-- Sekme ikonu (favicon): damla içinde Truva Atı -->
+
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='7 1 50 56'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%230e6f84'/%3E%3Cstop offset='.55' stop-color='%2314a3a6'/%3E%3Cstop offset='1' stop-color='%2322d3c0'/%3E%3C/linearGradient%3E%3CclipPath id='c'%3E%3Cpath d='M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z'/%3E%3C/clipPath%3E%3C/defs%3E%3Cpath d='M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z' fill='url(%23g)'/%3E%3Cg clip-path='url(%23c)' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 41V25Q21 17 30 16'/%3E%3Cpath d='M25 41V26Q25 21 30 20.5'/%3E%3Cpath d='M30 16.5L34.5 14.5L35 19.5L41 28.5L40 31.5L35.5 30.5'/%3E%3Cpath d='M35.5 30.5Q32 32 32.5 36L35 41'/%3E%3Cpath d='M11 41q5.3-3.2 10.6 0t10.6 0t10.6 0t10.6 0'/%3E%3Cpath d='M13 46q5-3 10 0t10 0t10 0t10 0'/%3E%3Cpath d='M17 51q4.5-2.8 9 0t9 0t9 0'/%3E%3C/g%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- Leaflet (OpenStreetMap haritası) -->
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -31,7 +31,6 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .glass{background:var(--bg-card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow),inset 0 0 18px rgba(0,242,195,.04)}
 .glass:hover{border-color:var(--glow)}
 
-/* Sidebar */
 .sidebar{width:220px;flex-shrink:0;background:var(--bg-sidebar);padding:18px 12px 0;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow:hidden}
 .brand{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding:0 6px}
 .brand-logo{width:44px;height:44px;flex-shrink:0;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 0 8px rgba(0,242,195,.4))}
@@ -46,7 +45,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   background:linear-gradient(180deg,rgba(3,10,16,1) 0%,rgba(3,10,16,.4) 45%,rgba(3,10,16,.9) 100%),url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=500&q=80') center/cover}
 .sidebar-footer p{font-size:10.5px;font-style:italic;color:#9ed9e8;text-align:center;line-height:1.5;position:relative}
 
-/* Layout */
+
 .main-wrapper{flex:1;min-width:0;display:flex;flex-direction:column}
 .header{padding:12px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);gap:16px}
 .hdr-left{display:flex;align-items:center;gap:22px}
@@ -70,7 +69,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .content{padding:16px 20px 20px;display:grid;grid-template-columns:1fr 270px;gap:14px;align-items:start}
 .left-col,.right-col{display:flex;flex-direction:column;gap:14px;min-width:0}
 
-/* Hero */
+
 .hero{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--border);padding:22px 28px;min-height:125px;display:flex;justify-content:space-between;align-items:flex-start;
   background:linear-gradient(90deg,rgba(3,11,17,.88) 0%,rgba(3,11,17,.25) 55%,rgba(3,11,17,.1) 100%),url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1400&q=80') center 60%/cover}
 .hero h1{font-size:26px;font-weight:800;margin-bottom:6px;color:#fff;display:flex;align-items:center;gap:8px}
@@ -79,7 +78,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .carbon span{font-size:9px;color:#c4dbe6;display:block}
 .carbon strong{font-size:17px;color:var(--cyan)}
 
-/* Metrics */
+
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .metric{padding:14px 14px 12px;position:relative;overflow:hidden;min-height:118px}
 .metric-title{font-size:10.5px;font-weight:700;color:var(--text-main);margin-bottom:10px;display:flex;align-items:center;gap:7px}
@@ -89,7 +88,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .metric-sub{font-size:9.5px;color:var(--cyan);margin-top:8px;font-weight:700;max-width:60%}
 .metric-sub span{color:var(--text-muted);font-weight:500;margin-left:4px}
 .spark{position:absolute;right:10px;bottom:12px;width:80px;height:36px}
-/* Rüzgar hızı kartı: yazı ve mini grafik aynı satırda yan yana (üst üste binmez) */
+
 .metric-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:8px}
 .metric-foot .metric-sub{margin-top:0;max-width:none;flex:1 1 auto;min-width:0}
 .spark-inline{width:56px;height:22px;flex-shrink:0;display:block}
@@ -97,7 +96,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .bars{position:absolute;right:12px;bottom:12px;display:flex;align-items:flex-end;gap:4px;height:40px}
 .bars i{display:block;width:7px;background:linear-gradient(0deg,var(--cyan),var(--blue));border-radius:2px}
 
-/* Chart + optimization */
+
 .chart-opt{display:grid;grid-template-columns:1.85fr 1fr;gap:12px}
 .chart-card{padding:14px 16px}
 .chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
@@ -117,7 +116,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .opt-stats small{font-size:7.5px;color:var(--text-muted);display:block;margin-top:2px;line-height:1.2}
 .opt-btn{width:100%;margin-top:12px;padding:8px;background:rgba(0,242,195,.1);border:1px solid var(--cyan);color:var(--cyan);border-radius:8px;font-size:10px;font-weight:700;cursor:pointer}
 
-/* Right column & Dynamic Effects */
+
 .weather{padding:16px;border-radius:14px;border:1px solid var(--border);position:relative;overflow:hidden;
   background:linear-gradient(180deg,rgba(8,26,38,.55),rgba(3,11,17,.9)),url('https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=500&q=80') center/cover}
 .weather .lbl{font-size:9px;font-weight:700;color:var(--text-muted);letter-spacing:.6px;display:flex;justify-content:space-between}
@@ -164,15 +163,15 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .map-card{height:225px;position:relative;overflow:hidden;padding:0;background:#071722}
 #scadaMap{position:absolute;inset:0;z-index:1;background:#071722;font-family:inherit}
 :root[data-theme="light"] #scadaMap{background:#dfe9ef}
-/* Gri harita karolarını panelin turkuaz-lacivert temasına boya (ince ayar: hue-rotate = ton, saturate = canlılık, brightness = parlaklık) */
+
 :root[data-theme="dark"] .leaflet-tile-pane{filter:sepia(1) hue-rotate(158deg) saturate(2.8) brightness(1.2) contrast(1.05)}
 :root[data-theme="light"] .leaflet-tile-pane{filter:sepia(.55) hue-rotate(155deg) saturate(1.7)}
-/* Harita üzerindeki öğelerin temaya göre renkleri */
+
 .map-card{--chip-bg:rgba(3,11,17,.78);--chip-text:#e2f1f8;--chip-muted:#9fb7c5}
 :root[data-theme="light"] .map-card{--chip-bg:rgba(255,255,255,.9);--chip-text:#0a1923;--chip-muted:#526e7e}
 .map-card .lbl{position:absolute;top:8px;left:10px;z-index:2;font-size:10px;font-weight:700;color:var(--chip-text);background:var(--chip-bg);border:1px solid var(--border);padding:3px 9px;border-radius:8px;pointer-events:none}
 .map-legend{position:absolute;bottom:8px;left:10px;display:flex;gap:10px;font-size:8px;color:var(--chip-muted);z-index:2;background:var(--chip-bg);border:1px solid var(--border);padding:3px 8px;border-radius:8px;pointer-events:none}
-/* Yakınlaştırma (+ / −) düğmeleri */
+
 .leaflet-bar{border:1px solid var(--border) !important;box-shadow:none !important;border-radius:10px !important;overflow:hidden}
 .leaflet-bar a{background:var(--chip-bg) !important;color:var(--cyan) !important;border-bottom:1px solid var(--border) !important;width:26px !important;height:26px !important;line-height:26px !important;font-weight:700;backdrop-filter:blur(6px)}
 .leaflet-bar a:last-child{border-bottom:none !important}
@@ -181,7 +180,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .leaflet-top.leaflet-right{margin-top:4px}
 .map-legend i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px}
 
-/* Harita noktaları (radar efektli) */
+
 .scada-icon{background:none;border:none}
 .scada-pin{display:block;position:relative;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 14px var(--c)}
 .scada-pin::after{content:'';position:absolute;inset:-3px;border:1.5px solid var(--c);border-radius:50%;animation:radarPulse 2s infinite ease-out}
@@ -199,7 +198,6 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .quote .lf{font-size:26px; position:relative; z-index:2;}
 .quote p{font-size:11.5px;font-style:italic;color:var(--cyan);font-weight:700;line-height:1.5; position:relative; z-index:2;}
 
-/* Bottom */
 .grid-bottom{display:grid;grid-template-columns:1.15fr 1.2fr 1fr;gap:12px}
 .card{padding:14px 16px}
 .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
@@ -234,7 +232,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .sched-row .dots.mid{color:#facc15}
 .sched-row .dots.low{color:#f97316}
 
-/* Forms & Tables */
+
 .form-group{margin-bottom:14px;display:flex;flex-direction:column;gap:6px}
 .form-group label{font-size:11px;font-weight:700;color:var(--text-muted)}
 .form-group input {
@@ -281,7 +279,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 .data-table th, .data-table td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
 .data-table th{color:var(--text-muted);font-weight:700;background:rgba(0,0,0,.2)}
 
-/* Mobil menü butonu ve katman (masaüstünde gizli) */
+
 .menu-btn{display:none;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:18px;line-height:1;align-items:center;justify-content:center;flex-shrink:0}
 .menu-btn:hover{border-color:var(--cyan)}
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90;opacity:0;transition:opacity .25s}
@@ -293,7 +291,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   .chart-opt,.grid-bottom{grid-template-columns:1fr}
   .grid-4{grid-template-columns:1fr 1fr}
 
-  /* Sidebar: açılır çekmece */
+
   .sidebar{position:fixed;left:0;top:0;bottom:0;height:100%;width:240px;z-index:100;transform:translateX(-100%);transition:transform .28s ease;overflow-y:auto}
   body.menu-open .sidebar{transform:translateX(0);box-shadow:8px 0 32px rgba(0,0,0,.5)}
   .sidebar-overlay{display:block;pointer-events:none}
@@ -301,7 +299,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
   body.menu-open{overflow:hidden}
   .menu-btn{display:flex}
 
-  /* Başlık */
+ 
   .header{flex-wrap:wrap;padding:10px 14px;gap:10px}
   .hdr-left{flex:1 1 100%;flex-wrap:wrap;gap:10px;min-width:0}
   .hdr-left .loc{flex:1;min-width:0}
@@ -369,17 +367,17 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
               <path d="M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z"/>
             </clipPath>
           </defs>
-          <!-- Damla -->
+       
           <path d="M32 3C32 3 10 27 10 41a22 22 0 0 0 44 0C54 27 32 3 32 3z" fill="url(#dropGrad)"/>
           <g clip-path="url(#dropClip)" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <!-- At başı: boyun/yele -->
+      
             <path d="M21 41V25Q21 17 30 16"/>
             <path d="M25 41V26Q25 21 30 20.5"/>
-            <!-- At başı: kulak, alın, burun, çene, boyun -->
+           
             <path d="M30 16.5L34.5 14.5L35 19.5L41 28.5L40 31.5L35.5 30.5"/>
             <path d="M28.5 24Q27.5 27 29.5 28.5"/>
             <path d="M35.5 30.5Q32 32 32.5 36L35 41"/>
-            <!-- Dalgalar -->
+           
             <path d="M11 41q5.3-3.2 10.6 0t10.6 0t10.6 0t10.6 0"/>
             <path d="M13 46q5-3 10 0t10 0t10 0t10 0"/>
             <path d="M17 51q4.5-2.8 9 0t9 0t9 0"/>
@@ -405,7 +403,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 </aside>
 
 <div class="main-wrapper">
-  <!-- Header -->
+
   <header class="header">
     <div class="hdr-left">
       <button class="menu-btn" onclick="toggleMenu()" aria-label="Menü">☰</button>
@@ -420,12 +418,12 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </header>
 
-  <!-- TAB 1: GENEL BAKIŞ -->
+
   <div id="tab-overview" class="tab-pane active">
     <div class="content">
-      <!-- LEFT -->
+    
       <div class="left-col">
-        <!-- Hero -->
+       
         <section class="hero searchable">
           <div>
             <h1><span data-tr="ÇAN-SU Kontrol Merkezi" data-en="ÇAN-SU Control Center" style="color:#fff">ÇAN-SU Kontrol Merkezi</span></h1>
@@ -437,7 +435,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
         </section>
 
-        <!-- Metrics -->
+       
         <section class="grid-4">
           <div class="metric glass searchable">
             <div class="metric-title"><span class="mi">💨</span><span data-tr="Rüzgâr Hızı" data-en="Wind Speed">Rüzgar Hızı</span></div>
@@ -467,7 +465,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
         </section>
 
-        <!-- Chart + Optimization -->
+      
         <section class="chart-opt">
           <div class="glass chart-card searchable">
             <div class="chart-head">
@@ -495,7 +493,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
         </section>
 
-        <!-- Bottom -->
+       
         <section class="grid-bottom">
           <div class="glass card searchable">
             <div class="card-head"><b>🌤️ <span data-tr="Günlük Tahmin" data-en="Daily Forecast">Günlük Tahmin</span></b><small data-tr="Bugün ⌄" data-en="Today ⌄">Bugün ⌄</small></div>
@@ -529,13 +527,13 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
               </div>
             </div>
             <div id="sched-container">
-              <!-- JS Dinamik Dolduracak -->
+
             </div>
           </div>
         </section>
       </div>
 
-      <!-- RIGHT -->
+     
       <aside class="right-col">
         <div class="weather searchable">
           <div class="lbl"><span data-tr="CANLI HAVA DURUMU" data-en="LIVE WEATHER">CANLI HAVA DURUMU</span><span onclick="fetchLiveWeatherData()" style="cursor:pointer">🔄</span></div>
@@ -550,7 +548,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
           </div>
         </div>
 
-        <!-- Gerçek harita (Leaflet + OpenStreetMap) -->
+      
         <div class="glass map-card searchable">
           <div id="scadaMap"></div>
           <div class="lbl">🔍 <span data-tr="Bölge Haritası ve SCADA Noktaları" data-en="Region Map & SCADA Nodes">Bölge Haritası ve SCADA Noktaları</span></div>
@@ -574,7 +572,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 2: İKLİM VE RÜZGÂR -->
+ 
   <div id="tab-climate" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">💨 <span data-tr="İklim ve Rüzgar Analizi" data-en="Climate & Wind Analysis">İklim ve Rüzgar Analizi</span></h2>
@@ -587,7 +585,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 3: SU KAYNAKLARI -->
+
   <div id="tab-water" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">💧 <span data-tr="Su Kaynakları ve Depo Takibi" data-en="Water Resources & Tanks">Su Kaynakları ve Depo Takibi</span></h2>
@@ -600,7 +598,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 4: OPTİMİZASYON TAKVİMİ -->
+
   <div id="tab-calendar" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">📅 <span data-tr="Optimizasyon Takvimi" data-en="Optimization Calendar">Optimizasyon Takvimi</span></h2>
@@ -614,7 +612,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 5: ENERJİ VE TASARRUF -->
+
   <div id="tab-energy" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">🌱 <span data-tr="Enerji ve Tasarruf Paneli" data-en="Energy & Savings Panel">Enerji ve Tasarruf Paneli</span></h2>
@@ -626,7 +624,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 6: TAHMİN MODELİ (ML) -->
+
   <div id="tab-ml" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">🤖 <span data-tr="Makine Öğrenmesi (ML) Tahmin Performansı" data-en="Machine Learning (ML) Performance">Makine Öğrenmesi (ML) Tahmin Performansı</span></h2>
@@ -638,7 +636,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 7: RAPORLAR -->
+ 
   <div id="tab-reports" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">📄 <span data-tr="Sistem Raporları ve Günlükler" data-en="System Reports & Logs">Sistem Raporları ve Günlükler</span></h2>
@@ -681,7 +679,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
     </div>
   </div>
 
-  <!-- TAB 8: AYARLAR -->
+  
   <div id="tab-settings" class="tab-pane">
     <div style="padding:24px;">
       <h2 style="margin-bottom:16px;">⚙️ <span data-tr="Sistem ve IoT Bağlantı Ayarları" data-en="System & IoT Connection Settings">Sistem ve IoT Bağlantı Ayarları</span></h2>
@@ -713,7 +711,7 @@ body{background:radial-gradient(1200px 600px at 70% -10%,rgba(0,163,255,.08),tra
 </div>
 
 <script>
-// Live Time & Date Integration
+
 function updateTime() {
   const now = new Date();
   const timeStr = now.toLocaleTimeString('tr-TR');
@@ -729,7 +727,7 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-// GÜNLÜK VE HAFTALIK TAKVİM İÇERİĞİNİ DEĞİŞTİRME MANTIĞI
+
 const scheduleData = {
   weekly: [
     { label: 'Pazartesi', time: '12:00 - 16:00', dots: '●●●', class: '' },
@@ -772,14 +770,10 @@ function setScheduleView(mode, btn) {
   container.innerHTML = html;
 }
 
-// Varsayılan Haftalık Takvimi Yükle
+
 setScheduleView('weekly', null);
 
-// ===== HARİTA: Leaflet + OpenStreetMap =====
-// NOT: Konumlar Çanakkale'deki gerçek yerlere denk getirildi, ama etiketler DEMO amaçlıdır.
-//  - RES   : Gülpir RES (Çanakkale Merkez) — 39.9788, 26.4472 (Global Energy Monitor)
-//  - Depo  : Atikhisar Barajı               — 40.1239, 26.5234 (Vikipedi)
-//  - Pompa : Çanakkale kent merkezi (yaklaşık, gerçek bir pompa istasyonu değil)
+
 const SCADA_POINTS = [
   { lat: 39.9788, lng: 26.4472, color: '#22c55e', tr: 'Merkez RES',      en: 'Central WPP' },
   { lat: 40.1239, lng: 26.5234, color: '#00f2c3', tr: 'Ana Depo',        en: 'Main Tank' },
@@ -794,7 +788,7 @@ function fitScadaMap() {
   // Yan boşluk etiketlerin kesilmemesi, üst/alt boşluk başlık ve açıklama için
   scadaMap.invalidateSize();
   scadaMap.fitBounds(bounds, { padding: [60, 48], maxZoom: 13, animate: false });
-  // Hesap hatalı çıkar ya da aşırı uzaklaşırsa noktalar üst üste biner; güvenli yakınlaştırmaya zorla
+ 
   const z = scadaMap.getZoom();
   if (!(z >= 7)) scadaMap.setView(bounds.getCenter(), 10, { animate: false });
 }
@@ -804,7 +798,7 @@ function renderMapLabels() {
   scadaMarkers.forEach(({ marker, point }) => marker.setTooltipContent(point[lang]));
 }
 
-// Harita karoları: Esri (anahtar gerektirmez), temaya göre koyu/açık gri + yer isimleri
+
 let scadaTiles = null;
 function setScadaTiles() {
   if (!scadaMap) return;
@@ -852,7 +846,7 @@ function initScadaMap() {
   scadaMap.invalidateSize();
   fitScadaMap();
 
-  // Pencere/düzen değişince haritayı yeniden sığdır
+
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -867,7 +861,7 @@ window.addEventListener('load', () => {
 
 let chartInstance = null;
 
-// Backend'den Canlı Veri ve Sayısal Etki Metriklerini Çekme
+
 async function fetchLiveWeatherData() {
   try {
     const response = await fetch('/api/run-pipeline');
@@ -879,7 +873,6 @@ async function fetchLiveWeatherData() {
       const curHum = data.canli_nem ? Math.round(data.canli_nem) : 62;
       const curDir = data.canli_yon || 0;
 
-      // DOM Temel Değerleri Güncelle
       const elWind = document.getElementById('val-wind-speed');
       const elHdrTemp = document.getElementById('hdr-temp');
       const elHdrDesc = document.getElementById('hdr-weather-desc');
@@ -945,7 +938,7 @@ async function fetchLiveWeatherData() {
   }
 }
 
-// Çift Eksenli (Dual Y-Axis) Gelişmiş Grafik Yapısı
+
 function buildChartWithData(labels, windData, tempData) {
   const canvas = document.getElementById('mainChart');
   if(!canvas) return;
@@ -1133,7 +1126,7 @@ function switchTab(el, tabId){
   document.querySelectorAll('.tab-pane').forEach(pane=>pane.classList.remove('active'));
   const activePane = document.getElementById('tab-' + tabId);
   if(activePane) activePane.classList.add('active');
-  // Gizli sekmeden dönünce harita boyutunu yeniden hesapla
+
   if(tabId === 'overview' && scadaMap){
     setTimeout(()=>{ scadaMap.invalidateSize(); fitScadaMap(); }, 60);
   }
