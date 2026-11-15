@@ -2,7 +2,7 @@ import os
 import requests
 import pandas as pd
 
-# Çanakkale Genel Koordinatları
+
 LATITUDE = 39.1500
 LONGITUDE = 26.4100
 LOCATION_NAME = "Çanakkale İl Geneli"
@@ -35,7 +35,7 @@ def fetch_weather_data():
         
         df = pd.DataFrame(hourly_data)
         
-        # Raw klasörüne kaydet
+   
         os.makedirs("data/raw", exist_ok=True)
         output_path = "data/raw/can_weather_raw.csv"
         df.to_csv(output_path, index=False)
