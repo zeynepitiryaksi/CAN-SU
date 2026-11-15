@@ -11,10 +11,7 @@ def optimize_pumping_schedule():
         
     df = pd.read_csv(processed_path)
     
-    # Optimizasyon Mantığı:
-    # Pompa Verimlilik Skoru > 25 olan saatlerde pompaları tam kapasite (%100) çalıştır
-    # 10 - 25 arası olan saatlerde yarım kapasite (%50) çalıştır
-    # < 10 olan saatlerde şebeke elektriği harcamamak için pompaları KAPAT (%0)
+ 
     
     def calculate_action(score):
         if score >= 25:
@@ -26,7 +23,7 @@ def optimize_pumping_schedule():
 
     df['pump_status'] = df['pump_efficiency_score'].apply(calculate_action)
     
-    # Sonuçları kaydet
+   
     df.to_csv(output_path, index=False)
     
     print(f"✓ Optimizasyon tamamlandı ve çalışma takvimi '{output_path}' konumuna kaydedildi.")
